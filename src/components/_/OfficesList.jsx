@@ -1,10 +1,16 @@
 import React, { useState, useEffect, } from 'react';
 import "../../styles/_/OfficesList.scss"
 import { Pagination, } from '../index';
-import { axios } from '../../config/index';
+import { useDispatch, useSelector, } from "react-redux"
+import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
 export default function OfficesList() {
 
+	const state = useSelector(state => state.offices)
+	const {
+		collection,
+	} = state
+	const dispatch = useDispatch();
 	const [list , setList] = useState([{}])
 	const Header = () => (
 		<div className="offices-list__header">
@@ -31,9 +37,8 @@ export default function OfficesList() {
 			<table className="offices-list__body__table__body">
 				<tbody className="offices-list__body__table__body__tbody">
 					{list.map( (office, index) => {
-						console.log(office)
 						return (<tr key={office.id}>
-							<td><div className="offices-list__body__table__body__tbody__text">{index}</div></td>
+							<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
 							<td><div className="offices-list__body__table__body__tbody__text">{office.code}</div></td>
 							<td><div className="offices-list__body__table__body__tbody__text">{office.name}</div></td>
 							<td><div className="offices-list__body__table__body__tbody__text">{office.full_address}</div></td>
@@ -48,23 +53,21 @@ export default function OfficesList() {
 				</tbody>
 			</table>
 			<div className="offices-list__body__paging">
-				<Pagination />						
+				<Pagination page={{type: "offices"}}/>						
 			</div>
 		</div>
 	)
 	
-	const fetchData = async () => {
-
-		const url = `/api/offices`
-		const response = await axios.get(url)
-	
-		if (!response.data.success) console.log("Fetch List Recruits Failed")
-		console.log(response.data)
-		setList(response.data.data.collection)
+	const fetchData = async ( pageIndex  = 1, pageSize = 10 ) => {
+		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index: pageIndex, size: pageSize }}})
 	}
 	useEffect(() => {
 		fetchData()
 	}, [])
+
+	useEffect(() => {
+		setList(prev => collection)
+	}, [ state, ])
 
 	return (
 		<div className="offices-list">	

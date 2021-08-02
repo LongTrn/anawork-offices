@@ -19,7 +19,12 @@ export default function OfficesFolders() {
 
 	const Body = () => (
 		<div className="offices-folders__body">
-
+			<div className="offices-folders__body__search-bar">
+				<input type="text" className="offices-folders__body__search-bar__field" placeholder="Tìm kiếm..."/>
+			</div>
+			<div className="offices-folders__body__folders">
+				
+			</div>
 		</div>
 	)
 	
