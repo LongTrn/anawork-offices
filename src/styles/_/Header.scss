@@ -1,0 +1,33 @@
+@import "../index.scss";
+
+.offices-header {
+
+	height: 46px;
+	display: flex;
+	align-items: center;
+
+	&__item__sub {
+
+		&__line {
+
+			width: 1px;
+			height: 22px;
+			margin: 0 8px;
+			background-color: #959cb6;
+			display: block;
+		}
+
+		&__text {
+
+			height: 15px;
+			text-align: left;
+			color: #959595;
+		}
+	}
+
+	&--wrapper {
+
+		display: flex;
+		align-items: center;
+	}
+}

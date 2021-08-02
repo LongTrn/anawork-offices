@@ -1,0 +1,99 @@
+.offices-page {
+
+	display: flex;
+	justify-content: flex-end;
+	align-items:baseline;
+	max-height: 65px;
+	padding: 0 16px;
+
+	select {
+		
+		border: none;
+		outline: none;
+		// font-family: Poppins;
+		font-size: 13px;
+		text-align: center;
+		color: #4a4a4a;	
+		background-color: transparent;
+
+		&.page__range {
+
+			width: 40px;
+			height: 20px;
+		}
+
+		.page__range__value, #paging__ListRecruitment {
+
+			// font-family: Poppins;
+			// font-size: 13px;
+			text-align: center;
+			// color: #4a4a4a;	
+			// height: fit-content;		
+		}
+
+		&#paging__ListRecruitment {
+
+			height: max-content;
+		}
+	}
+
+	&__item {
+
+		display: flex;
+		flex-direction: row;
+		align-items: baseline;
+	}
+
+	&__text {
+
+		width: max-content;
+		height: 20px;
+		margin: 0 16px 0 0;
+		font-family: Poppins;
+		font-size: 13px;
+		text-align: left;
+		color: #757575;
+	}
+
+	&__number {
+
+		max-width: 100px;
+		height: 20px;
+		margin: 0 16px;
+		font-family: Poppins;
+		font-size: 13px;
+		text-align: center;
+		color: #bdbdbd;
+	}
+
+	&__buttons {
+
+		// width: 80px;
+		display: flex;
+		justify-content: space-between;
+		// margin-left: 16px;
+
+		button.btn {
+
+			padding: 8px;
+		}
+		
+		i {
+			
+			width: 1px;
+			height: 12px;
+		}
+
+		&--size {
+
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
+
+.center { 
+	
+	display: flex;
+	justify-content: center;
+}

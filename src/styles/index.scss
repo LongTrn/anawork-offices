@@ -1,0 +1,33 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+// * {
+	
+// 	font-family: Roboto,Helvetica Neue,sans-serif!important;
+// 	font-size:  13px;
+// 	--ezycheck-white: #ffffff;
+// 	--primary-purple: #5d78ff;
+// 	--primary-dark-grey: #434349;
+// 	--primary-medium-grey: #757575;
+// 	--login-blue: #1399fb;
+// }
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 300;
+	font-family: Roboto,Helvetica Neue,sans-serif!important;
+    -webkit-font-smoothing: antialiased;
+	--ezycheck-white: #ffffff;
+	--primary-purple: #5d78ff;
+	--primary-dark-grey: #434349;
+	--primary-medium-grey: #757575;
+	--login-blue: #1399fb;
+}
+
+body {
+    background: #f9f9fc;
+}
+
