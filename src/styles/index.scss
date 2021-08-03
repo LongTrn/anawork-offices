@@ -1,17 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-// * {
-	
-// 	font-family: Roboto,Helvetica Neue,sans-serif!important;
-// 	font-size:  13px;
-// 	--ezycheck-white: #ffffff;
-// 	--primary-purple: #5d78ff;
-// 	--primary-dark-grey: #434349;
-// 	--primary-medium-grey: #757575;
-// 	--login-blue: #1399fb;
-// }
-
 body, html {
     height: 100%;
     margin: 0;
@@ -31,3 +20,124 @@ body {
     background: #f9f9fc;
 }
 
+.offices-list__body__table__body__tbody,
+textarea 
+{
+						
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 10px;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #ccc;
+
+        &:hover { 
+            
+            background-color: #888;
+        }
+    }
+
+    &::-webkit-scrollbar-button {
+        
+        display: none;
+    }
+}
+
+.modal {
+
+	&-dialog {
+
+		height: calc(100% - 180px);
+		margin: 90px auto;
+	}
+
+    &-header {
+
+        &__button {
+
+            &__text {
+
+                width: 11px;
+                height: 11px;
+            }
+        }
+    }
+
+    &-title {
+        
+        &.h4 {
+        
+            height: 14.4px;
+            font-size: 15px;
+            font-weight: 550;
+            text-align: left;
+            color: #615f71;
+        }
+    }
+
+    &-footer {
+
+        height: 40px;
+        padding: 3px 16px;
+
+        &__buttons {
+
+            min-width: 54px;
+            height: 32px;
+            margin: 0;
+
+            gap: 10px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            
+            &__text {
+
+                &--left {
+    
+                    height: 14px;
+                    font-weight: 500;
+                    text-align: center;
+                    color: var(--ezycheck-white);
+                }
+    
+                &--neutral {
+    
+    
+                }
+    
+                &--right {
+    
+                    height: 14px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    text-align: center;
+                    color: var(--primary-purple);
+                }
+            }
+            
+            &--left {
+
+                background-color: var(--primary-purple);                
+            }
+            
+            &--right {
+
+                background-color: #e9eaf9;
+            }
+            
+            &--neutral {
+                
+            }
+
+        }
+    }
+}

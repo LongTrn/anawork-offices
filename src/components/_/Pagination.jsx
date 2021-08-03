@@ -15,12 +15,10 @@ export default function Pagination ({ classes, page }) {
 	const [ranging, setRanging] = useState(index * size)
 	const [allRequest, setAllRequest] = useState(false)
 	const dispatch = useDispatch();
-	// const { idJobDetail: exceptJobID }= useParams();
+	// const { idJobDetail: exceptJobID } = useParams();
 	
 	const handlePage = (pageIndex) => {
 
-		console.log(pageIndex)
-		
 		switch (page.type) {
 
 			case "offices":
@@ -68,7 +66,7 @@ export default function Pagination ({ classes, page }) {
 	}, [ index, size, ])
 
 	useEffect(() => {
-		console.log("state", state)
+		// console.log("state", state)
 	}, [ page, state ])
 
 	useEffect(() => { 

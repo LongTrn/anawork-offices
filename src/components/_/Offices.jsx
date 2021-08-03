@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-	OfficesList,
+	OfficeDetail,
 	OfficesFolders,
+	OfficesList,
 
 } from "../index"
 import "../../styles/_/Offices.scss"
+import { useSelector, } from "react-redux"
 
 export default function Offices() {
+	
+	const {data} = useSelector(state => state.offices)
+
+	useEffect(() => {},[ data ])
 
 	return (
 		<div className="offices-layout">
 			<OfficesFolders />
-			<OfficesList />
+			{data.id? 
+				<OfficeDetail />
+				:
+				<OfficesList />
+			}
 		</div>
 	)
 }
