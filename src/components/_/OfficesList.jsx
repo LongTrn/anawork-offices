@@ -41,36 +41,36 @@ export default function OfficesList() {
 						</div></th>
 				</thead>
 			</table>
-			<table className="offices-list__body__table__body">
-				<tbody className="offices-list__body__table__body__tbody">
-					{list.map( (office, index) => {
-						return (<tr key={office.id}>
-							<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.code}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.name}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.full_address}</div></td>
-							<td>
-								<div className="offices-list__body__table__body__tbody__action">
-									<EditOffice id={office.id}/>
-									<DeleteOffice />
-								</div>
-							</td>
-						</tr>
-					)})}
-				</tbody>
-			</table>
+			{list.length > 0?
+				(<table className="offices-list__body__table__body">
+					<tbody className="offices-list__body__table__body__tbody">
+						{list.map( (office, index) => {
+							return (
+							<tr key={office.id}>
+								<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.code}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.name}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.full_address}</div></td>
+								<td>
+									<div className="offices-list__body__table__body__tbody__action">
+										<EditOffice id={office.id}/>
+										<DeleteOffice id={office.id}/>
+									</div>
+								</td>
+							</tr>
+						)})}
+					</tbody>
+				</table>)
+				:
+				<div className="offices-list__body__table__body__no-content">
+					Không có dữ liệu
+				</div>
+			}
 			<div className="offices-list__body__paging">
 				<Pagination page={{type: "offices"}}/>						
 			</div>
 		</div>
 	)
-	
-	const fetchData = async ( pageIndex  = 1, pageSize = 10 ) => {
-		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index: pageIndex, size: pageSize }}})
-	}
-	useEffect(() => {
-		fetchData()
-	}, [])
 
 	useEffect(() => {
 		const slicedCollection = (index > 0 && size > 0)? collection.slice((index - 1) * size, index * size) : collection

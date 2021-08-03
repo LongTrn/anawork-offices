@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect, } from 'react';
 import { } from "../index";
 import "../../styles/_/OfficesFolders.scss"
+import { useDispatch, useSelector, } from "react-redux"
+import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
 export default function OfficesFolders() {
+
+	const state = useSelector(state => state.offices)
+	const {
+		folders,
+	} = state
+	const dispatch = useDispatch();
+	const [list , setList] = useState([{}])
 
 	const Header = () => (
 		<div className="offices-folders__header">
@@ -23,10 +32,40 @@ export default function OfficesFolders() {
 				<input type="text" className="offices-folders__body__search-bar__field" placeholder="Tìm kiếm..."/>
 			</div>
 			<div className="offices-folders__body__folders">
-				
+				<Folder />
 			</div>
 		</div>
 	)
+	
+	const Folder = () => {
+
+		<div>
+			
+		</div>
+	}
+	
+	const Office = () => {
+
+		<div>
+
+		</div>
+	}
+
+	const fetchData = ( pageSize = 10 ) => {
+		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { size: pageSize }}})
+	}
+	
+	useEffect(() => {
+		fetchData()
+	}, [])
+
+	useEffect(() => {
+		setList(prev => folders)
+	}, [ state, ])
+
+	useEffect(() => {
+		console.log("folders", folders)
+	}, [ list, ])
 	
 	return (
 		<div className="offices-folders">

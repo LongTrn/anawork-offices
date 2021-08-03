@@ -2,9 +2,15 @@ import {
 	FETCH_OFFICES_DATA,
 	FETCH_OFFICES_FAILED,
 	FETCH_OFFICES_SUCCESS,
+
+	FETCH_OFFICES_FOLDERS,
+	FETCH_OFFICES_FOLDERS_FAILED,
+	FETCH_OFFICES_FOLDERS_SUCCESS,
+	
 	FETCH_OFFICES_DETAIL,
 	FETCH_OFFICES_DETAIL_FAILED,
 	FETCH_OFFICES_DETAIL_SUCCESS,
+	
 	SET_OFFICES_PAGE,
 	SET_OFFICES_PAGE_SIZE,
 	
@@ -38,6 +44,7 @@ export const officesReducer = (state = initial, action) => {
 			
 		case FETCH_OFFICES_DATA:
 		case FETCH_OFFICES_DETAIL:
+		case FETCH_OFFICES_FOLDERS:
 			return {
 				...state, 
 				isLoading: true,
@@ -45,6 +52,7 @@ export const officesReducer = (state = initial, action) => {
 		
 		case FETCH_OFFICES_FAILED:
 		case FETCH_OFFICES_DETAIL_FAILED:
+		case FETCH_OFFICES_FOLDERS_FAILED:
 			return {
 				...state, 
 				isLoading: false,
@@ -59,12 +67,21 @@ export const officesReducer = (state = initial, action) => {
 				total: action.payload.total,
 			}
 		
+		case FETCH_OFFICES_FOLDERS_SUCCESS:
+			return {
+				...state, 
+				isLoading: false,
+				folders: action.payload.folders,
+				total: action.payload.total,
+			}
+		
 		case FETCH_OFFICES_SUCCESS:
 			return {
 				...state, 
 				isLoading: false,
 				collection: action.payload.collection,
 				total: action.payload.total,
+				data: {},
 			}
 
 		default:
