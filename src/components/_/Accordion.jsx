@@ -20,7 +20,7 @@ function AccordionItemTitle({id, is_office, button, icon, title, item}) {
 	const onDetail = (id) => {
 		dispatch({type: FETCH_OFFICES_DETAIL, payload: { input : { id }}})
 	}
-	useEffect(() => {console.log(item)}, [collapsed,])
+	useEffect(() => {}, [collapsed,])
 
 	return (
 		<>

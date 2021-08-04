@@ -13,8 +13,8 @@ export default function AddModalBody (props) {
 		code: "", //"VP0001",
 		full_address: "", //"68 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000",
 		is_office: true, //true,
-		latitude: "", //"12",
-		longitude: "", //"12",
+		latitude: "", //"12", // 0 - 100
+		longitude: "", //"12", // 0 - 100
 		name: "", //"Văn phòng UI test",
 		office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
 		parent_id: "", //"96856649-d5fa-46af-98d2-71e7289dbf77",
@@ -66,7 +66,7 @@ export default function AddModalBody (props) {
 					<div className="add-modal-body__fields">
 						<label htmlFor="type" className="add-modal-body__fields__text">Loại văn phòng</label>
 						<select name="type" className="add-modal-body__fields__input add-modal-body__fields__input--select" value={office_type_id}>
-							{officesTypes.map(officesType => (<option value={officesType.id}>{officesType.name}</option>))}
+							{officesTypes.map(officesType => (<option value={officesType.id} >{officesType.name}</option>))}
 						</select>
 					</div>
 				</Col>

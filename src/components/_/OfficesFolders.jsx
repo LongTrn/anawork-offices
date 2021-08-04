@@ -51,7 +51,6 @@ export default function OfficesFolders() {
 	}, [ state, ])
 
 	useEffect(() => {
-		console.log("folders", folders)
 	}, [ list, ])
 	
 	return (
