@@ -71,7 +71,7 @@ function* workerOffices (action) {
 function* workerOfficesFolders (action) {
 	try {
 		const { collection, } = action.payload.input
-		console.log("workerOfficesFolders", collection, action.payload)
+
 		const folders = yield recursion(collection)
 		yield put({ type: FETCH_OFFICES_FOLDERS_SUCCESS, payload: { total: collection.length, folders}})
 	} catch (error) {

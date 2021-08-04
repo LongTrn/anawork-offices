@@ -44,7 +44,6 @@ export default function OfficesFolders() {
 	}
 	
 	useEffect(() => {
-		console.log(Accordion)
 		fetchData()
 	}, [])
 

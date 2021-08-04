@@ -47,9 +47,12 @@
 
 		&__search-bar {
 
+			height: 36px;
+			
 			&__field {
-
+				
 				border: 0;
+				height: 36px;
 				width: calc(100% - 6px);
 				outline: none;
 				padding-right: 6px;

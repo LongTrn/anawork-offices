@@ -16,25 +16,19 @@ function recursion ( office, ) {
 
 function AccordionItem({title, icon, button, content, ...props}) {
 
-	const renderContent = recursion(props)
-
-	// useEffect(() => {}, [props])
-
 	return (
 		<div className="offices-accordion__item">
-			<AccordionItemTitle is_office={props.is_office} title={props.name}>
-				{renderContent}
-			</AccordionItemTitle>
+			<AccordionItemTitle is_office={props.is_office} title={props.name} item={props} />
 		</div>
 	)
 }
 
-function AccordionItemTitle({is_office, button, icon, title, ...props}) {
+function AccordionItemTitle({is_office, button, icon, title, item}) {
 	
 	const [collapsed, setCollapsed] = useState(true)
 	const handleAction = () => setCollapsed(prev => !prev)
 
-	useEffect(() => {}, [collapsed,])
+	useEffect(() => {console.log(item)}, [collapsed,])
 
 	return (
 		<>
@@ -44,7 +38,11 @@ function AccordionItemTitle({is_office, button, icon, title, ...props}) {
 				<div className="offices-accordion__item__title__text">{title || "title"}</div>
 			</div>
 			<div className={collapsed? "offices-accordion__item__content": "offices-accordion__item__content offices-accordion__item__content--show"}>
-				{props.children}
+				{
+					(item.children !== undefined && item.children.length > 0 && item.children.map(region => 
+						(<AccordionItemTitle key={region.id} is_office={region.is_office} title={region.name} item={region}/>)
+					))
+				}
 			</div>
 		</>
 	)
@@ -55,13 +53,11 @@ export default function Accordion({ children, }) {
 	return (
 		<div className="offices-accordion">
 			{children?
-				// children.map(child => {
-				// 	console.log(child)
-				// 	return (<AccordionItem title={child.name} {...child}/>)
-				// })
 				children.map(child => (<AccordionItem title={child.name} {...child}/>))
-				// null
-				: null
+				: 
+				<div className="offices-accordion__no-content">
+					Không có dữ liệu
+				</div>
 			}
 		</div>
 	)
