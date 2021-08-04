@@ -3,6 +3,7 @@ import { } from "../index";
 import "../../styles/_/OfficesFolders.scss"
 import { useDispatch, useSelector, } from "react-redux"
 import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { Accordion, } from "../index"
 
 export default function OfficesFolders() {
 
@@ -32,30 +33,18 @@ export default function OfficesFolders() {
 				<input type="text" className="offices-folders__body__search-bar__field" placeholder="Tìm kiếm..."/>
 			</div>
 			<div className="offices-folders__body__folders">
-				<Folder />
+				{/* <Accordion children={[{name: 1, title: "adf"},{name: 2},{name: 3},{name: 4}]}/> */}
+				<Accordion children={folders}/>
 			</div>
 		</div>
 	)
-	
-	const Folder = () => {
-
-		<div>
-			
-		</div>
-	}
-	
-	const Office = () => {
-
-		<div>
-
-		</div>
-	}
 
 	const fetchData = ( pageSize = 10 ) => {
 		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { size: pageSize }}})
 	}
 	
 	useEffect(() => {
+		console.log(Accordion)
 		fetchData()
 	}, [])
 
