@@ -1,6 +1,11 @@
 import React, { useState, useEffect, } from 'react';
 import "../../styles/_/OfficesList.scss"
-import { Pagination, } from '../index';
+import { 
+	Pagination, 
+	AddOffice,
+	EditOffice,
+	DeleteOffice, 
+} from '../index';
 import { useDispatch, useSelector, } from "react-redux"
 import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
@@ -8,6 +13,8 @@ export default function OfficesList() {
 
 	const state = useSelector(state => state.offices)
 	const {
+		index, 
+		size,
 		collection,
 	} = state
 	const dispatch = useDispatch();
@@ -30,43 +37,44 @@ export default function OfficesList() {
 					<th><div className="text-uppercase offices-list__body__table__head__thead__text">địa chỉ</div></th>
 					<th>
 						<div className="offices-list__body__table__head__thead__action">
-							<button className="btn shadow-none"><i className="bi bi-plus-lg"/><span className="list__body__table__body__tbody__action__text">Thêm</span></button>
+							<AddOffice />
 						</div></th>
 				</thead>
 			</table>
-			<table className="offices-list__body__table__body">
-				<tbody className="offices-list__body__table__body__tbody">
-					{list.map( (office, index) => {
-						return (<tr key={office.id}>
-							<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.code}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.name}</div></td>
-							<td><div className="offices-list__body__table__body__tbody__text">{office.full_address}</div></td>
-							<td>
-								<div className="offices-list__body__table__body__tbody__action">
-									<button className="btn shadow-none"><i className="bi bi-pencil-fill"/></button>
-									<button className="btn shadow-none"><i className="bi bi-trash-fill"/></button>
-								</div>
-							</td>
-						</tr>
-					)})}
-				</tbody>
-			</table>
+			{list.length > 0?
+				(<table className="offices-list__body__table__body">
+					<tbody className="offices-list__body__table__body__tbody">
+						{list.map( (office, index) => {
+							return (
+							<tr key={office.id}>
+								<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.code}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.name}</div></td>
+								<td><div className="offices-list__body__table__body__tbody__text">{office.full_address}</div></td>
+								<td>
+									<div className="offices-list__body__table__body__tbody__action">
+										<EditOffice id={office.id}/>
+										<DeleteOffice id={office.id}/>
+									</div>
+								</td>
+							</tr>
+						)})}
+					</tbody>
+				</table>)
+				:
+				<div className="offices-list__body__table__body__no-content">
+					Không có dữ liệu
+				</div>
+			}
 			<div className="offices-list__body__paging">
 				<Pagination page={{type: "offices"}}/>						
 			</div>
 		</div>
 	)
-	
-	const fetchData = async ( pageIndex  = 1, pageSize = 10 ) => {
-		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index: pageIndex, size: pageSize }}})
-	}
-	useEffect(() => {
-		fetchData()
-	}, [])
 
 	useEffect(() => {
-		setList(prev => collection)
+		const slicedCollection = (index > 0 && size > 0)? collection.slice((index - 1) * size, index * size) : collection
+		setList(prev => slicedCollection)
 	}, [ state, ])
 
 	return (

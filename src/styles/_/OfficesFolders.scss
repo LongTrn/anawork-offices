@@ -1,8 +1,8 @@
 .offices-folders {
 
-	width: 271px;
-	height: 771px;
+	width: 100%;
 	border-right: 1px solid #eff0f5;
+	flex-grow: 1;
 
 	&__header {
 
@@ -42,18 +42,26 @@
 	&__body {
 
 		height: 100%;
-		padding: 16px 2px 16px 15px;
+		padding: 16px 2px 16px 16px;
+		// flex-grow: 1;
 
 		&__search-bar {
 
+			height: 36px;
+			
 			&__field {
-
+				
 				border: 0;
+				height: 36px;
 				width: calc(100% - 6px);
 				outline: none;
 				padding-right: 6px;
 				border-bottom: 1px solid #eff0f5;
 			}
+		}
+
+		&__folders {
+
 		}
 	}
 }
