@@ -74,30 +74,30 @@ export default function Pagination ({ classes, page }) {
 	}, [ all, ])
 
 	return (
-		<div className={classes? "offices-page center" :"offices-page"}>
-			<div className="offices-page__item">
-				<span className="offices-page__text">Số dòng trên mỗi trang: </span>
+		<div className={classes? "offices-pagination center" :"offices-pagination"}>
+			<div className="offices-pagination__item">
+				<span className="offices-pagination__text">Số dòng trên mỗi trang: </span>
 				<select 
 					name="type" 
-					className="offices-page__pageSize offices-page__pageSize__value"
+					className="offices-pagination__pageSize offices-pagination__pageSize__value"
 					id="paging__ListRecruitment"
 					onChange={(e) => handlePageSize(e.target.value)}
 					value={size}
 				>
 					{numbersList.map(val => (
-						<option value={val} key={val} className="offices-page__pageSize__value">{val}</option>
+						<option value={val} key={val} className="offices-pagination__pageSize__value">{val}</option>
 					))}
 				</select>
 			</div>
-			<div className="offices-page__item">
+			<div className="offices-pagination__item">
 				<div>
-					<span className="offices-page__number text-nowrap">{(index - 1) * size + 1 > total? parseInt(total/size) * size + 1: (index - 1) * size + 1 || " "} - {ranging > total? total: ranging || " "} của {total}</span>
+					<span className="offices-pagination__number text-nowrap">{(index - 1) * size + 1 > total? parseInt(total/size) * size + 1: (index - 1) * size + 1 || " "} - {ranging > total? total: ranging || " "} của {total}</span>
 				</div>
-				<div className="offices-page__buttons">
-					<button className="btn offices-page__buttons--size shadow-none" disabled={!(index - 1)}><i className="bi bi-chevron-bar-left offices-page__buttons__first" onClick={() => handlePage(1)}/></button>
-					<button className="btn offices-page__buttons--size shadow-none" disabled={!(index - 1)}><i className="bi bi-chevron-compact-left offices-page__buttons__previous" onClick={() => handlePage(index - 1)}/></button>
-					<button className="btn offices-page__buttons--size shadow-none" disabled={ranging > total}><i className="bi bi-chevron-compact-right offices-page__buttons__next" onClick={() => handlePage(index + 1)}/></button>
-					<button className="btn offices-page__buttons--size shadow-none" disabled={ranging > total}><i className="bi bi-chevron-bar-right offices-page__buttons__last" onClick={() => handlePage(Math.ceil(total / size))}/></button>
+				<div className="offices-pagination__buttons">
+					<button className="btn offices-pagination__buttons--size shadow-none" disabled={!(index - 1)}><i className="bi bi-chevron-bar-left offices-pagination__buttons__first" onClick={() => handlePage(1)}/></button>
+					<button className="btn offices-pagination__buttons--size shadow-none" disabled={!(index - 1)}><i className="bi bi-chevron-compact-left offices-pagination__buttons__previous" onClick={() => handlePage(index - 1)}/></button>
+					<button className="btn offices-pagination__buttons--size shadow-none" disabled={ranging > total}><i className="bi bi-chevron-compact-right offices-pagination__buttons__next" onClick={() => handlePage(index + 1)}/></button>
+					<button className="btn offices-pagination__buttons--size shadow-none" disabled={ranging > total}><i className="bi bi-chevron-bar-right offices-pagination__buttons__last" onClick={() => handlePage(Math.ceil(total / size))}/></button>
 				</div>
 			</div>
 		</div>

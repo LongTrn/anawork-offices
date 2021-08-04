@@ -1,8 +1,8 @@
+// $test: 
+
 .offices-accordion {
 
 	&__item {
-
-		padding: 10px 0;
 
 		&__title {
 
@@ -13,7 +13,6 @@
 			min-width: 100%;
 			max-width: 100%;
 			padding: 10px 0;
-			// flex-wrap: wrap;
 			position: relative;
 
 			&__button {
@@ -28,6 +27,13 @@
 
 					font-size: 10px;
 				}
+			}
+
+			&__info {
+
+				flex-grow: 1;
+				display: flex;
+				flex-direction: row;
 			}
 
 			&__icon {
@@ -72,12 +78,27 @@
 
 				flex-shrink: 1;
 			}
+
+			&__icon, &__info {
+
+				flex-shrink: 1;
+			}
+
+			&:hover {
+
+				background-color: #e9eaf9;
+			}
+
+			&--is-child {
+
+				padding: 10px 20px;
+			}
 		}
 
 		&__content {
 
 			display: none;
-			padding: 10px 20px;
+			// padding: 10px 20px;
 
 			&--show {
 				

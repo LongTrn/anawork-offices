@@ -1,9 +1,8 @@
-.offices-page {
+.offices-pagination {
 
 	display: flex;
 	justify-content: flex-end;
 	align-items:baseline;
-	max-height: 65px;
 	padding: 0 16px;
 
 	select {
@@ -68,10 +67,8 @@
 
 	&__buttons {
 
-		// width: 80px;
 		display: flex;
 		justify-content: space-between;
-		// margin-left: 16px;
 
 		button.btn {
 

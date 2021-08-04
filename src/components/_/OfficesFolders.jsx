@@ -33,7 +33,6 @@ export default function OfficesFolders() {
 				<input type="text" className="offices-folders__body__search-bar__field" placeholder="Tìm kiếm..."/>
 			</div>
 			<div className="offices-folders__body__folders">
-				{/* <Accordion children={[{name: 1, title: "adf"},{name: 2},{name: 3},{name: 4}]}/> */}
 				<Accordion children={folders}/>
 			</div>
 		</div>
