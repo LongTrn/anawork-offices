@@ -1,13 +1,29 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
 import { AddModalBody, } from "../index"
+import {axios} from "../../config/index";
+import { useDispatch, useSelector, } from "react-redux"
+import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
 export default function OfficeAdd() {
 
+	const submitRef = useRef();
+	const { index, size, } = useSelector(state => state.offices)
 	const [show, setShow] = useState(false);
+	const dispatch = useDispatch();
+	const { Header, Title, Body, Footer, } = Modal;
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const { Header, Title, Body, Footer, } = Modal;
+	const handleSubmit = async () => {
+		
+		const submitState = submitRef.current.state();
+		const url = `/api/offices`
+		const response = await axios.post(url, submitState)
+
+		if (!response.data.success) return;
+		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index, size }}})
+		return handleClose()
+	}
 
 	useEffect(() => {}, [show])
 
@@ -26,11 +42,11 @@ export default function OfficeAdd() {
 					<button className="btn shadow-none" onClick={handleClose}><i className="bi bi-x-lg modal-header__button__text"></i></button>
 				</Header>
 				<Body className="add-office add-office__body">
-					<AddModalBody />
+					<AddModalBody ref={submitRef}/>
 				</Body>
 				<Footer className="gap-2">
-					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--left"><span className="modal-footer__buttons__text--left">Xóa</span></button>
-					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--right" onClick={handleClose}><span className=" modal-footer__buttons__text--right">Hủy</span></button>
+					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--left" onClick={() => handleSubmit()}><span className="modal-footer__buttons__text--left">Thêm</span></button>
+					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--right" onClick={() => handleClose()}><span className=" modal-footer__buttons__text--right">Hủy</span></button>
 				</Footer>
 			</Modal>
 		</>

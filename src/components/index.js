@@ -1,5 +1,7 @@
 export {default as Accordion, AccordionItem} from "./_/Accordion.jsx"
 export {default as Header} from "./_/Header.jsx"
+export {default as AddFolder} from "./_/AddFolder.jsx"
+export {default as AddFolderModalBody} from "./_/AddFolderModalBody.jsx"
 export {default as AddModalBody} from "./_/AddModalBody.jsx"
 export {default as AddOffice} from "./_/AddOffice.jsx"
 export {default as DeleteOffice} from "./_/DeleteOffice.jsx"

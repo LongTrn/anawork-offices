@@ -1,0 +1,43 @@
+.add-folder-modal-body {
+
+	height: 200px;
+	padding: 3px;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+	
+	&__fields {
+
+		display: flex;
+		flex-direction: column;
+
+		&__text {
+
+			font-size: 10px;
+			color: #959595;
+		}
+
+		&__input {
+
+			border: none;
+			outline: none;
+			border-bottom: 1px solid #eff0f5;
+			height: 40px;
+
+			&__value {
+
+				height: 40px;
+			}
+
+			&--select {
+
+				padding: 2.6px 0;
+			}
+		}
+	}
+
+	&__body {
+
+
+	}
+}
