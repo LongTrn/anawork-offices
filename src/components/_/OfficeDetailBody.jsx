@@ -53,28 +53,17 @@ export default forwardRef(function Body(props, ref) {
 
 	useEffect(() => {
 
-		console.log("data state", data)
+		// console.log("data state", data)
 		setState(prev => data)
 	},[ data ])
 
 	useEffect(() => {
-		console.log("changeing state", state)
+		// console.log("changeing state", state)
 	},[ state ])
 
 	useImperativeHandle(ref, () => ({
 		state: () => {
-			console.log("useImperativeHandle", ref, state)
 			return state;
-		},
-
-		submit: async (id, index, size) => {
-			
-			alert("test", id, index, size)
-			// const url = `/api/offices/${id}`
-			// const response = await axios.put(url, state)
-
-			// if(!response.data.success) return;
-			// return dispatch({type: FETCH_OFFICES_DATA, payload: {input: { index, size }}})
 		},
 	}), [ state ]);
 
