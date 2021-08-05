@@ -3,6 +3,10 @@ import {
 	FETCH_OFFICES_FAILED,
 	FETCH_OFFICES_SUCCESS,
 
+	FETCH_OFFICES_LIST,
+	FETCH_OFFICES_LIST_FAILED,
+	FETCH_OFFICES_LIST_SUCCESS,
+
 	FETCH_OFFICES_FOLDERS,
 	FETCH_OFFICES_FOLDERS_FAILED,
 	FETCH_OFFICES_FOLDERS_SUCCESS,
@@ -13,12 +17,16 @@ import {
 	
 	SET_OFFICES_PAGE,
 	SET_OFFICES_PAGE_SIZE,
+	SET_OFFICES_TOTAL,
 	
 } from "./officesActionTypes"
 
 const initial = {
 	data: {},
+	folders: [],
+	folderId: "",
 	collection: [],
+	list: [],
 	index: 1,
 	size: 10,
 	total: 0,
@@ -42,7 +50,15 @@ export const officesReducer = (state = initial, action) => {
 				size: action.payload.input.size,
 			}
 			
+		
+		case SET_OFFICES_TOTAL:
+			return {
+				...state, 
+				total: action.payload.input.total,
+			}
+			
 		case FETCH_OFFICES_DATA:
+		case FETCH_OFFICES_LIST:
 		case FETCH_OFFICES_DETAIL:
 		case FETCH_OFFICES_FOLDERS:
 			return {
@@ -51,6 +67,7 @@ export const officesReducer = (state = initial, action) => {
 			}
 		
 		case FETCH_OFFICES_FAILED:
+		case FETCH_OFFICES_LIST_FAILED:
 		case FETCH_OFFICES_DETAIL_FAILED:
 		case FETCH_OFFICES_FOLDERS_FAILED:
 			return {
@@ -75,13 +92,27 @@ export const officesReducer = (state = initial, action) => {
 				total: action.payload.total,
 			}
 		
+		case FETCH_OFFICES_LIST_SUCCESS:
+			return {
+				...state, 
+				isLoading: false,
+				list: action.payload.list,
+				total: action.payload.total,
+				data: {},
+				index: action.payload.index,
+				size: action.payload.size,
+				folderId: action.payload.id || state.folderId,
+			}
+		
 		case FETCH_OFFICES_SUCCESS:
 			return {
 				...state, 
 				isLoading: false,
 				collection: action.payload.collection,
-				total: action.payload.total,
 				data: {},
+				index: action.payload.index,
+				size: action.payload.size,
+				folderId: action.payload.id || state.folderId,
 			}
 
 		default:

@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { } from "../index";
 import "../../styles/_/OfficesFolders.scss"
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST, FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 import { Accordion, AddFolder, } from "../index"
 
 function Header () {
@@ -46,7 +46,11 @@ export default function OfficesFolders() {
 	const [list , setList] = useState([{}])
 
 	const fetchData = ( pageSize = 10 ) => {
-		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { size: pageSize }}})
+		console.log(FETCH_OFFICES_DATA)
+		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index: 1, size: pageSize }}})
+		console.log(FETCH_OFFICES_LIST)
+		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { index: 1, size: pageSize }}})
+		return;
 	}
 	
 	useEffect(() => {
@@ -54,6 +58,7 @@ export default function OfficesFolders() {
 	}, [])
 
 	useEffect(() => {
+		// console.log("state", state)
 		setList(prev => folders)
 	}, [ state, ])
 

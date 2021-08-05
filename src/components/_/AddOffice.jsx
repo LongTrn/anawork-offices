@@ -8,7 +8,7 @@ import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 export default function OfficeAdd() {
 
 	const submitRef = useRef();
-	const { index, size, } = useSelector(state => state.offices)
+	const { folderId, index, size, } = useSelector(state => state.offices)
 	const [show, setShow] = useState(false);
 	const dispatch = useDispatch();
 	const { Header, Title, Body, Footer, } = Modal;
@@ -42,7 +42,7 @@ export default function OfficeAdd() {
 					<button className="btn shadow-none" onClick={handleClose}><i className="bi bi-x-lg modal-header__button__text"></i></button>
 				</Header>
 				<Body className="add-office add-office__body">
-					<AddModalBody ref={submitRef}/>
+					<AddModalBody id={folderId} ref={submitRef}/>
 				</Body>
 				<Footer className="gap-2">
 					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--left" onClick={() => handleSubmit()}><span className="modal-footer__buttons__text--left">Thêm</span></button>

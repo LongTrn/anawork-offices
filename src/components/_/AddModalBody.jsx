@@ -7,8 +7,9 @@ import React, {
 import "../../styles/_/AddModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
 import { axios } from "../../config/index";
+import { useDispatch, useSelector, } from "react-redux"
 
-export default forwardRef(function AddModalBody (props, ref) {
+export default forwardRef(function AddModalBody ({id}, ref) {
 
 	const [officesTypes, setOfOfficesTypes] = useState([])
 	const [state, setState] = useState({
@@ -22,6 +23,14 @@ export default forwardRef(function AddModalBody (props, ref) {
 		parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
 		radius: "0", //"12",
 	})
+	const { 
+		collection, 
+		data,
+	} = useSelector(state => state.offices)
+	const [mutated, setMutated] = useState({
+		parent_name: "",
+	})
+	const {parent_name, } = mutated
 	const {code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
 	
 	const handleChange = (event) => {
@@ -43,6 +52,19 @@ export default forwardRef(function AddModalBody (props, ref) {
 	useEffect(() => {
 		fetchOfficesTypes()
 	}, [])
+
+	useEffect(() => {
+	}, [mutated])
+
+	useEffect(() => {
+		const detail = collection.find(office => office.id === id)
+		if (detail) {
+
+			setMutated(prev => ({...prev, 
+				parent_name: detail.name
+			}))
+		}
+	}, [ collection, ])
 
 	useImperativeHandle(ref, () => ({
 		state: () => {

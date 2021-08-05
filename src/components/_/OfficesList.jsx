@@ -7,7 +7,7 @@ import {
 	DeleteOffice, 
 } from '../index';
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_DATA, SET_OFFICES_PAGE, SET_OFFICES_PAGE_SIZE} from '../../redux/_/offices/officesActionTypes';
 
 export default function OfficesList() {
 
@@ -15,10 +15,10 @@ export default function OfficesList() {
 	const {
 		index, 
 		size,
-		collection,
+		list,
 	} = state
-	const dispatch = useDispatch();
-	const [list , setList] = useState([{}])
+	const [listState , setListState] = useState([{}])
+
 	const Header = () => (
 		<div className="offices-list__header">
 			<div className="text-nowrap text-uppercase offices-list__header__text">
@@ -41,10 +41,10 @@ export default function OfficesList() {
 						</div></th>
 				</thead>
 			</table>
-			{list.length > 0?
+			{listState.length > 0?
 				(<table className="offices-list__body__table__body">
 					<tbody className="offices-list__body__table__body__tbody">
-						{list.map( (office, index) => {
+						{listState.map( (office, index) => {
 							return (
 							<tr key={office.id}>
 								<td><div className="offices-list__body__table__body__tbody__text">{index + 1}</div></td>
@@ -73,8 +73,9 @@ export default function OfficesList() {
 	)
 
 	useEffect(() => {
-		const slicedCollection = (index > 0 && size > 0)? collection.slice((index - 1) * size, index * size) : collection
-		setList(prev => slicedCollection)
+
+		const slicedCollection = (index > 0 && size > 0)? list.slice((index - 1) * size, index * size) : list
+		setListState(prev => slicedCollection)
 	}, [ state, ])
 
 	return (

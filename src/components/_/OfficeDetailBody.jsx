@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle, } from 'react';
 import { useDispatch, useSelector, } from "react-redux"
 import {axios} from "../../config/index";
 import { Container, Row, Col, } from "react-bootstrap";
@@ -40,6 +40,10 @@ export default forwardRef(function Body(props, ref) {
 		fetchOfficesTypes()
 	}, [])
 
+	useEffect(() => {}, [ collection, ])
+
+	useEffect(() => { setState(prev => data) },[ data ])
+
 	useEffect(() => {
 		const detail = collection.find(office => office.id === parent_id)
 		if (detail) {
@@ -48,16 +52,6 @@ export default forwardRef(function Body(props, ref) {
 				parent_name: detail.name
 			}))
 		}
-	}, [ collection ])
-
-	useEffect(() => {
-
-		// console.log("data state", data)
-		setState(prev => data)
-	},[ data ])
-
-	useEffect(() => {
-		// console.log("changeing state", state)
 	},[ state ])
 
 	useImperativeHandle(ref, () => ({
@@ -86,7 +80,7 @@ export default forwardRef(function Body(props, ref) {
 				<Col>
 					<div className="add-modal-body__fields">
 						<label htmlFor="region" className="add-modal-body__fields__text">Trực thuộc</label>
-						<input type="text" className="add-modal-body__fields__input" onChange={(e) => handleChange(e)} value={parent_name} name={"parent_id"}/>
+						<input disabled type="text" className="add-modal-body__fields__input" onChange={(e) => handleChange(e)} value={parent_name} name={"parent_id"}/>
 					</div>
 				</Col>
 				<Col>

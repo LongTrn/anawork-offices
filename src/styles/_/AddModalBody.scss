@@ -55,3 +55,7 @@
 		}
 	}
 }
+
+input.add-modal-body__fields__input:disabled {
+    background-color: var(--ezycheck-white);
+}

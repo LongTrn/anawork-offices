@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { FETCH_OFFICES_DETAIL } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST, FETCH_OFFICES_DETAIL, SET_OFFICES_TOTAL } from '../../redux/_/offices/officesActionTypes';
 import "../../styles/_/Accordion.scss"
 import { useDispatch, useSelector, } from "react-redux"
 import { OfficesTypesIcon, } from "../../models/index"
@@ -19,29 +19,39 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isParent 
 	const [collapsed, setCollapsed] = useState(true)
 	const dispatch = useDispatch();
 	const classNameIsChild = " offices-accordion__item__title--is-child "
-	const current = collection.find(office => office.id === id)
+	const current = collection && collection.find(office => office.id === id)
 	const customIcon = collection && OfficesTypesIcon.find(type => type.office_type_id === current.office_type_id)
 
 	const handleAction = () => setCollapsed(prev => !prev)
 	const onDetail = (id) => {
 		dispatch({type: FETCH_OFFICES_DETAIL, payload: { input : { id }}})
 	}
+	const fectchData = async (id) => {
+
+		console.log("fetchdata", id)
+		dispatch({type: FETCH_OFFICES_LIST, payload: {input: { id, index: 1, size: 10, }}})
+		// dispatch({type: SET_OFFICES_TOTAL, payload: { input: { total: 1, }}})
+		return
+	}
 
 	useEffect(() => {}, [collapsed,])
 	
-	useEffect(() => {console.log("icon ", customIcon, collection.find(office => office.id === id))}, [collection])
+	useEffect(() => {}, [collection])
 
 	return (
 		<>
 			<div className="offices-accordion__item__block">
-				<div aria-level={level} className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild)  + " offices-accordion__item__title"}>
+				<div 
+				// onClick={() => fectchData(id)}
+				aria-level={level} 
+				className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild)  + " offices-accordion__item__title"}>
 					{is_office? null : 
 						(<div className="offices-accordion__item__title__button" onClick={() => is_office || handleAction()}>
 							{button || !collapsed? (<i className="bi bi-chevron-down"></i>): (<i className="bi bi-chevron-right"></i>)}
 						</div>)
 					}
-					<div className="offices-accordion__item__title__info" onClick={() => !item.is_office || onDetail(id)}>
-						<div className="offices-accordion__item__title__icon">{icon || (<div className={customIcon.value + " offices-accordion__item__title__icon__svg "}/>)}</div>
+					<div className="offices-accordion__item__title__info" onClick={() => item.is_office ? onDetail(id) : fectchData(id)}>
+						<div className="offices-accordion__item__title__icon">{icon || (<div className={customIcon && customIcon.value + " offices-accordion__item__title__icon__svg "}/>)}</div>
 						<div className="offices-accordion__item__title__text"><span>{title || "title"}</span></div>
 					</div>
 				</div>
@@ -49,7 +59,6 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isParent 
 					{
 						(item.children.length > 0 && item.children.map(region => 
 							(<><AccordionItemTitle key={region.id} id={region.id} is_office={region.is_office} title={region.name} item={region} isChild={classNameIsChild} level={level + 1}/></>)
-							// (<AccordionItemTitle key={region.id} id={region.id} is_office={region.is_office} title={region.name} item={region} isParent={classNameIsChild}/>)
 						))
 					}
 				</div>)}
