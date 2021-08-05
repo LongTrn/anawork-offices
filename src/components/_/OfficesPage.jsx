@@ -7,7 +7,7 @@ export default function OfficesPage() {
 	return (
 		<div className="offices-page">
 			<div className="offices-page--wrapper">
-				<Header main={"Cài đặt"} sub={"Cài đặt văn phòng"} />
+				<Header main={"Cài đặt"} sub={"Cài đặt văn phòng"} link/>
 				<Offices />
 			</div>
 		</div>

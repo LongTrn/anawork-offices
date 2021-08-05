@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, } from 'react';
+import React, { useState, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
 import { AddFolderModalBody, } from "../index"
 import {axios} from "../../config/index";
@@ -27,7 +27,6 @@ export default function AddFolder(props) {
 		const url = `/api/offices`
 		const response = await axios.post(url, submitState)
 		if (!response.data.success) return;
-		console.log(response.data.data)
 		return handleClose()
 	}
 

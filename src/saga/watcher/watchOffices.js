@@ -51,13 +51,9 @@ function recursion(collection, id) {
 
 function* workerOffices (action) {
 	try {
-		const { id, index, search, size } = action.payload.input
-		let response = yield fetchData(id, search)
-		
-		if (size >= response.total) response = yield fetchData(id, search,)
-		
-		let { collection } = response
-		yield put({ type: FETCH_OFFICES_SUCCESS, payload: { total: collection.length, collection, index, size, id: id || ""}})
+		const { collection, } = action.payload.input
+
+		yield put({ type: FETCH_OFFICES_SUCCESS, payload: { collection, }})
 		yield put({type: FETCH_OFFICES_FOLDERS, payload: { input: { collection }}})
 	} catch (error) {
 		console.group("Watcher Offices Error")
@@ -75,7 +71,6 @@ function* workerOffices (action) {
 function* workerOfficesList (action) {
 	try {
 		const { id, index, search, size } = action.payload.input
-		console.log("workerOfficesList", action.payload.input)
 		let response = yield fetchData(id, search)
 		
 		if (size >= response.total) response = yield fetchData(id, search,)
@@ -84,6 +79,7 @@ function* workerOfficesList (action) {
 		
 		const filtered = id? collection.filter(office => office.parent_id === id).filter(office => office.is_office === true) : collection
 
+		yield put({ type: FETCH_OFFICES_DATA, payload: {input: { collection }}})
 		yield put({ type: FETCH_OFFICES_LIST_SUCCESS, payload: { total: filtered.length, list: filtered, index, size, id: id || ""}})
 	} catch (error) {
 		console.group("Watcher Offices Error")
@@ -103,7 +99,7 @@ function* workerOfficesFolders (action) {
 		const { collection, } = action.payload.input
 
 		const folders = yield recursion(collection)
-		yield put({ type: FETCH_OFFICES_FOLDERS_SUCCESS, payload: { total: collection.length, folders}})
+		yield put({ type: FETCH_OFFICES_FOLDERS_SUCCESS, payload: { folders }})
 	} catch (error) {
 		console.group("Watcher Offices Folders Error")
 		console.log(error)
@@ -150,12 +146,12 @@ function* workerPaging(action) {
 				yield put({type: FETCH_OFFICES_DETAIL, payload: {input}})
 				break;
 
-			case FETCH_OFFICES_LIST:
-				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
+			case FETCH_OFFICES_DATA:
+				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
 				break;
 				
 			default: 
-				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
 				break;
 		}
 	} catch (error) {
@@ -182,12 +178,12 @@ function* workerPageSizing(action) {
 				yield put({type: FETCH_OFFICES_DETAIL, payload: {input}})
 				break;
 
-			case FETCH_OFFICES_LIST:
-				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
+			case FETCH_OFFICES_DATA:
+				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
 				break;
 				
 			default: 
-				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
 				break;
 		}
 		

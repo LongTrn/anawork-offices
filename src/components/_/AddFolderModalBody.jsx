@@ -7,11 +7,11 @@ import React, {
 import "../../styles/_/AddFolderModalBody.scss";
 import { Container, Row, } from "react-bootstrap";
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
 
 export default forwardRef(function AddFolderModalBody(props, ref) {
 
-	const { index, size, collection, } = useSelector(state => state.offices)
+	const { collection, } = useSelector(state => state.offices)
 	const [list, setList] = useState([])
 	const [state, setState] = useState({
 		name: "", 
@@ -23,13 +23,13 @@ export default forwardRef(function AddFolderModalBody(props, ref) {
 
 
 	useEffect(() => {
-		dispatch({type: FETCH_OFFICES_DATA, payload: {input: { index, size, }}})
+		dispatch({type: FETCH_OFFICES_LIST, payload: { input: {}}})
 	}, [])
 
 	useEffect(() => {
 		setList(collection.map(office => !office.is_office && office).filter(notNull => notNull))
 	}, [collection])
-
+	
 	useEffect(() => {
 		console.log(list)
 	}, [list])

@@ -4,12 +4,12 @@ import React, {
 	forwardRef,
 	useImperativeHandle,
 } from "react";
-import "../../styles/_/AddModalBody.scss";
+import "../../styles/_/AddOfficeModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
 import { axios } from "../../config/index";
 import { useDispatch, useSelector, } from "react-redux"
 
-export default forwardRef(function AddModalBody ({id}, ref) {
+export default forwardRef(function AddOfficeModalBody ({id}, ref) {
 
 	const [officesTypes, setOfOfficesTypes] = useState([])
 	const [state, setState] = useState({
@@ -25,14 +25,14 @@ export default forwardRef(function AddModalBody ({id}, ref) {
 	})
 	const { 
 		collection, 
-		data,
 	} = useSelector(state => state.offices)
 	const [mutated, setMutated] = useState({
 		parent_name: "",
 	})
 	const {parent_name, } = mutated
 	const {code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
-	
+	const [error, setError] = useState({})
+
 	const handleChange = (event) => {
 
 		setState(prev => ({...prev,
@@ -46,13 +46,48 @@ export default forwardRef(function AddModalBody ({id}, ref) {
 
 		if (!response.data.success) return;
 		setOfOfficesTypes(response.data.data.collection)
-		console.log(response.data.data.collection)
 	}
 
+	const setErrorMessage = (target, message) => {
+
+		return setError(prev => ({...prev, 
+			[target]: message,
+		}))
+	}
+
+	const useSetErrorMessage = (target) => {
+
+		return setError(({prev}) => {
+			const test = 
+			console.log()
+			return {
+				...prev,
+			}
+		})
+	}
+
+	const validation = () => {
+
+		if (!code && code === "") {
+
+		}
+		// full_address: "", //"68 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000",
+		// is_office: true, //true,
+		// latitude: "", //"12", // 0 - 100
+		// longitude: "", //"12", // 0 - 100
+		// name: "", //"Văn phòng UI test",
+		// office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
+		// parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
+		// radius: "0", //"12",
+	}
+	
 	useEffect(() => {
 		fetchOfficesTypes()
 	}, [])
 
+	useEffect (() => {
+		setState(prev => ({...prev, parent_id: id}))
+	}, [id])
 	useEffect(() => {
 	}, [mutated])
 
@@ -66,9 +101,14 @@ export default forwardRef(function AddModalBody ({id}, ref) {
 		}
 	}, [ collection, ])
 
+	useEffect(() => {
+
+
+	}, [ error, ])
+
 	useImperativeHandle(ref, () => ({
 		state: () => {
-			console.log('state', state)
+			validation();
 			return state;
 		},	
 	}), [state])
@@ -93,7 +133,7 @@ export default forwardRef(function AddModalBody ({id}, ref) {
 				<Col>
 					<div className="add-modal-body__fields">
 						<label htmlFor="region" className="add-modal-body__fields__text">Trực thuộc</label>
-						<input disabled type="text" className="add-modal-body__fields__input" value={parent_id} />
+						<input disabled type="text" className="add-modal-body__fields__input" value={parent_name} />
 					</div>
 				</Col>
 				<Col>

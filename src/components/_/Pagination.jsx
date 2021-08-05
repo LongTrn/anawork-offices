@@ -44,15 +44,10 @@ export default function Pagination ({ classes, page }) {
 
 	useEffect(() => { 
 		setRanging(parseInt(index * size))
-	}, [ index, size, ])
+	}, [ index, size, folderId, ])
 
 	useEffect(() => {
-		// console.log("state", state)
 	}, [ page, state ])
-
-	// useEffect(() => { 
-	// 	setAllRequest(prev=>all)
-	// }, [ all, ])
 
 	return (
 		<div className={classes? "offices-pagination center" :"offices-pagination"}>

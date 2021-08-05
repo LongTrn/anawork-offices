@@ -15,12 +15,13 @@ function AccordionItem({id, title, icon, button, content, ...props}) {
 
 function AccordionItemTitle({id, is_office, button, icon, title, item, isParent = false, isChild = "", level = 1}) {
 	
-	const { collection, } = useSelector(state => state.offices)
+	const { folderId, data, size, collection, } = useSelector(state => state.offices)
 	const [collapsed, setCollapsed] = useState(true)
+	const [visited, setVisited] = useState(false)
 	const dispatch = useDispatch();
 	const classNameIsChild = " offices-accordion__item__title--is-child "
 	const current = collection && collection.find(office => office.id === id)
-	const customIcon = collection && OfficesTypesIcon.find(type => type.office_type_id === current.office_type_id)
+	const customIcon = collection && current && OfficesTypesIcon.find(type => type.office_type_id === current.office_type_id)
 
 	const handleAction = () => setCollapsed(prev => !prev)
 	const onDetail = (id) => {
@@ -28,23 +29,36 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isParent 
 	}
 	const fectchData = async (id) => {
 
-		console.log("fetchdata", id)
-		dispatch({type: FETCH_OFFICES_LIST, payload: {input: { id, index: 1, size: 10, }}})
-		// dispatch({type: SET_OFFICES_TOTAL, payload: { input: { total: 1, }}})
+		dispatch({type: FETCH_OFFICES_LIST, payload: {input: { id, index: 1, size, }}})
 		return
 	}
 
 	useEffect(() => {}, [collapsed,])
-	
 	useEffect(() => {}, [collection])
+	// useEffect(() => {setVisited(prev => id === folderId)}, [ folderId ])
+	// useEffect(() => {setVisited(prev => id === data.id)}, [ data ])
+	useEffect(() => {setVisited(prev => false)}, [ data, folderId, ])
+	
+	useEffect(() => {
+		setVisited(prev => false)
+		if (folderId  === id) {
+
+			setVisited(prev => true)
+		}
+		else if (data.id === id) {
+
+			setVisited(prev => true)
+		}
+		else setVisited(prev => false)
+	}, [ data, folderId, ])
 
 	return (
 		<>
 			<div className="offices-accordion__item__block">
 				<div 
-				// onClick={() => fectchData(id)}
 				aria-level={level} 
-				className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild)  + " offices-accordion__item__title"}>
+				className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild) + " offices-accordion__item__title "}>
+				{/* className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild) + (visited && " offices-accordion__item__title--modified ") + " offices-accordion__item__title "}> */}
 					{is_office? null : 
 						(<div className="offices-accordion__item__title__button" onClick={() => is_office || handleAction()}>
 							{button || !collapsed? (<i className="bi bi-chevron-down"></i>): (<i className="bi bi-chevron-right"></i>)}

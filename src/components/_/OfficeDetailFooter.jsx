@@ -1,7 +1,7 @@
 import React from 'react';
 import {axios} from "../../config/index";
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
 
 export default function Footer({ getState}) {
 
@@ -13,18 +13,17 @@ export default function Footer({ getState}) {
 
 	const onBack = (index = 1, size = 10) => {
 		
-		return dispatch({type: FETCH_OFFICES_DATA, payload: {input: { index, size }}})
+		return dispatch({type: FETCH_OFFICES_LIST, payload: {input: { index, size }}})
 	}
 
 	const onUpdate = async (index = 1, size = 10) => {
 		
 		const submitState = getState()
 		const url = `/api/offices/${submitState.id}`
-		console.log("testing edit", submitState.id, submitState)
 		const response = await axios.put(url, submitState)
 
 		if(!response.data.success) return;
-		return dispatch({type: FETCH_OFFICES_DATA, payload: {input: { index, size }}})
+		return dispatch({type: FETCH_OFFICES_LIST, payload: {input: { index, size }}})
 	}
 	
 	return (

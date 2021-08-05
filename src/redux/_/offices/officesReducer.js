@@ -50,13 +50,6 @@ export const officesReducer = (state = initial, action) => {
 				size: action.payload.input.size,
 			}
 			
-		
-		case SET_OFFICES_TOTAL:
-			return {
-				...state, 
-				total: action.payload.input.total,
-			}
-			
 		case FETCH_OFFICES_DATA:
 		case FETCH_OFFICES_LIST:
 		case FETCH_OFFICES_DETAIL:
@@ -81,7 +74,6 @@ export const officesReducer = (state = initial, action) => {
 				...state, 
 				isLoading: false,
 				data: action.payload.data,
-				total: action.payload.total,
 			}
 		
 		case FETCH_OFFICES_FOLDERS_SUCCESS:
@@ -89,7 +81,6 @@ export const officesReducer = (state = initial, action) => {
 				...state, 
 				isLoading: false,
 				folders: action.payload.folders,
-				total: action.payload.total,
 			}
 		
 		case FETCH_OFFICES_LIST_SUCCESS:
@@ -110,9 +101,6 @@ export const officesReducer = (state = initial, action) => {
 				isLoading: false,
 				collection: action.payload.collection,
 				data: {},
-				index: action.payload.index,
-				size: action.payload.size,
-				folderId: action.payload.id || state.folderId,
 			}
 
 		default:
