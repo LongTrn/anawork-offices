@@ -3,7 +3,7 @@ import { Modal, } from "react-bootstrap";
 import {axios} from "../../config/index";
 import { useDispatch, useSelector, } from "react-redux"
 import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
-
+import "../../styles/_/DeleteOffice.scss"
 
 export default function OfficeDelete({ id, }) {
 
@@ -44,9 +44,11 @@ export default function OfficeDelete({ id, }) {
 				<Body className="button__delete button__delete__body">
 					Bạn có muốn xóa bỏ yêu cầu này không?
 				</Body>
-				<Footer className="gap-2">
-					<button className="btn button__delete shadow-none"><span className="button__delete__text" onClick={() => handleDelete(id, index, size)}>Xóa</span></button>
-					<button className="btn button__delete__cancel shadow-none" onClick={handleClose}><span className="button__delete__text__cancel">Hủy</span></button>
+				<Footer className="gap-2 modal-footer">
+					{/* <button className="btn button__delete shadow-none"><span className="button__delete__text" onClick={() => handleDelete(id, index, size)}>Xóa</span></button>
+					<button className="btn button__delete__cancel shadow-none" onClick={handleClose}><span className="button__delete__text__cancel">Hủy</span></button> */}
+					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--left modal-footer__buttons--left--inverted"><span className="modal-footer__buttons__text--left--inverted" onClick={() => handleDelete(id, index, size)}>Xóa</span></button>
+					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--right" onClick={handleClose}><span className="modal-footer__buttons__text--right">Hủy</span></button>
 				</Footer>
 			</Modal>
 		</>

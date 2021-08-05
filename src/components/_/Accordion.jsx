@@ -8,12 +8,12 @@ function AccordionItem({id, title, icon, button, content, ...props}) {
 
 	return (
 		<div className="offices-accordion__item">
-			<AccordionItemTitle id={id} is_office={props.is_office} title={props.name} item={props} />
+			<AccordionItemTitle id={id} is_office={props.is_office} title={props.name} item={props} isParent/>
 		</div>
 	)
 }
 
-function AccordionItemTitle({id, is_office, button, icon, title, item, isChild = ""}) {
+function AccordionItemTitle({id, is_office, button, icon, title, item, isParent = false, isChild = "", level = 1}) {
 	
 	const { collection, } = useSelector(state => state.offices)
 	const [collapsed, setCollapsed] = useState(true)
@@ -21,7 +21,7 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isChild =
 	const classNameIsChild = " offices-accordion__item__title--is-child "
 	const current = collection.find(office => office.id === id)
 	const customIcon = collection && OfficesTypesIcon.find(type => type.office_type_id === current.office_type_id)
-	
+
 	const handleAction = () => setCollapsed(prev => !prev)
 	const onDetail = (id) => {
 		dispatch({type: FETCH_OFFICES_DETAIL, payload: { input : { id }}})
@@ -32,29 +32,28 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isChild =
 	useEffect(() => {console.log("icon ", customIcon, collection.find(office => office.id === id))}, [collection])
 
 	return (
-		<> 
-			<div className={((!isChild) ? "" : isChild + classNameIsChild)  + " offices-accordion__item__title"}>
-				{/* <div className={((!isChild) ? "" : classNameIsChild) + " offices-accordion__item__title"}> */}
-					<div className="offices-accordion__item__title__button" onClick={() => is_office || handleAction()}>
-						{is_office? null : 
-						(button || 
-							!collapsed? (<i className="bi bi-chevron-down"></i>): (<i className="bi bi-chevron-right"></i>)
-						)}
-						</div>
+		<>
+			<div className="offices-accordion__item__block">
+				<div aria-level={level} className={((is_office) ? " offices-accordion__item__title--padding-left " : "") + ((isParent) ? "" : isChild && isChild + classNameIsChild)  + " offices-accordion__item__title"}>
+					{is_office? null : 
+						(<div className="offices-accordion__item__title__button" onClick={() => is_office || handleAction()}>
+							{button || !collapsed? (<i className="bi bi-chevron-down"></i>): (<i className="bi bi-chevron-right"></i>)}
+						</div>)
+					}
 					<div className="offices-accordion__item__title__info" onClick={() => !item.is_office || onDetail(id)}>
 						<div className="offices-accordion__item__title__icon">{icon || (<div className={customIcon.value + " offices-accordion__item__title__icon__svg "}/>)}</div>
-						<div className="offices-accordion__item__title__text">{title || "title"}</div>
+						<div className="offices-accordion__item__title__text"><span>{title || "title"}</span></div>
 					</div>
-				{/* </div> */}
+				</div>
+				{(item.children !== undefined) && (<div className={collapsed? "offices-accordion__item__content": "offices-accordion__item__content offices-accordion__item__content--show"}>
+					{
+						(item.children.length > 0 && item.children.map(region => 
+							(<><AccordionItemTitle key={region.id} id={region.id} is_office={region.is_office} title={region.name} item={region} isChild={classNameIsChild} level={level + 1}/></>)
+							// (<AccordionItemTitle key={region.id} id={region.id} is_office={region.is_office} title={region.name} item={region} isParent={classNameIsChild}/>)
+						))
+					}
+				</div>)}
 			</div>
-
-			{(item.children !== undefined) && (<div className={collapsed? "offices-accordion__item__content": "offices-accordion__item__content offices-accordion__item__content--show"}>
-				{
-					(item.children.length > 0 && item.children.map(region => 
-						(<AccordionItemTitle key={region.id} id={region.id} is_office={region.is_office} title={region.name} item={region} isChild={classNameIsChild}/>)
-					))
-				}
-			</div>)}
 		</>
 	)
 }

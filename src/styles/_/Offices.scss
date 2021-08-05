@@ -12,11 +12,15 @@
 	&__left {
 
 		flex-basis: 25% !important;
+		max-width: 25%;
+		display: flex;
 	}
 	
 	&__right {
-
+		
 		flex-basis: 75% !important;
+		max-width: 75%;
+		display: flex;
 	}
 
 	&__left, &__right {

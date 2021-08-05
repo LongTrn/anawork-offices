@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, } 
 import { useDispatch, useSelector, } from "react-redux"
 import {axios} from "../../config/index";
 import { Container, Row, Col, } from "react-bootstrap";
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
 export default forwardRef(function Body(props, ref) {
 
