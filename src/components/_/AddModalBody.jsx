@@ -20,7 +20,7 @@ export default forwardRef(function AddModalBody (props, ref) {
 		name: "", //"Văn phòng UI test",
 		office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
 		parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
-		radius: "", //"12",
+		radius: "0", //"12",
 	})
 	const {code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
 	
@@ -37,7 +37,7 @@ export default forwardRef(function AddModalBody (props, ref) {
 
 		if (!response.data.success) return;
 		setOfOfficesTypes(response.data.data.collection)
-		console.log(response.data.collection)
+		console.log(response.data.data.collection)
 	}
 
 	useEffect(() => {

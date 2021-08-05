@@ -13,6 +13,7 @@
 			min-width: 100%;
 			max-width: 100%;
 			padding: 10px 0;
+			padding-right: 20px;
 			position: relative;
 
 			&__button {
@@ -22,6 +23,7 @@
 				color: var(--primary-medium-grey);
 				display: flex;
 				align-items: center;
+				padding: 0 4px;
 
 				& i.bi.bi-chevron-down {
 
@@ -50,12 +52,32 @@
 					display: block;
 					width: 100%;
 					height: 100%;
-					background-image: url('../../assets/svg/earth-globe-with-continents-maps.svg');
+					// background-image: url('../../assets/svg/earth-globe-with-continents-maps.svg');
 					-webkit-filter: invert(64%) sepia(9%) saturate(24%) hue-rotate(337deg) brightness(93%) contrast(80%);
 					filter: invert(64%) sepia(9%) saturate(24%) hue-rotate(337deg) brightness(93%) contrast(80%);
 					background-repeat: no-repeat;
 					background-size: 13px 13px;
 					object-fit: contain;
+
+					&__folders {
+						
+						background-image: url('../../assets/svg/earth-globe-with-continents-maps.svg');
+					}
+
+					&__hall {
+							
+						background-image: url('../../assets/svg/city-hall.svg');
+					}
+						
+					&__building {
+						
+						background-image: url('../../assets/svg/building-silhouette.svg');
+					}
+
+					&__house {
+						
+						background-image: url('../../assets/svg/house-door-fill.svg');
+					}
 				}
 			}
 
@@ -91,7 +113,7 @@
 
 			&--is-child {
 
-				padding: +10px 20px;
+				padding-left: 20px;
 			}
 		}
 
@@ -104,6 +126,7 @@
 				
 				display: flex;
 				flex-direction: column;
+				// padding-left: 20px;
 			}
 		}
 	}
