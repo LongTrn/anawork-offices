@@ -4,11 +4,12 @@ import React, {
 	forwardRef,
 	useImperativeHandle,
 } from "react";
-import "../../styles/_/AddModalBody.scss";
+import "../../styles/_/AddOfficeModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
 import { axios } from "../../config/index";
+import { useSelector, } from "react-redux"
 
-export default forwardRef(function AddModalBody (props, ref) {
+export default (function AddOfficeModalBodyy ({id}) {
 
 	const [officesTypes, setOfOfficesTypes] = useState([])
 	const [state, setState] = useState({
@@ -20,36 +21,46 @@ export default forwardRef(function AddModalBody (props, ref) {
 		name: "", //"Văn phòng UI test",
 		office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
 		parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
-		radius: "", //"12",
+		radius: "0", //"12",
 	})
-	const {code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
-	
-	const handleChange = (event) => {
+	const { 
+		collection, 
+	} = useSelector(state => state.offices)
+	const [mutated, setMutated] = useState({
+		parent_name: "",
+	})
+	const {parent_name, } = mutated
+	const {code, full_address, latitude, longitude, name, office_type_id, } = state
 
+	const handleChange = (event) => {
 		setState(prev => ({...prev,
 			[event.target.name]: event.target.value
 		}))
 	}
+	
 	const fetchOfficesTypes = async () => {
 
 		const url = `/api/officeTypes`
-		const response = await axios.get(url)
+		// const response = await axios.get(url)
 
-		if (!response.data.success) return;
-		setOfOfficesTypes(response.data.data.collection)
-		console.log(response.data.collection)
+		// if (!response.data.success) return;
+		// console.log(response.data.data.collection)
+		// setOfOfficesTypes(response.data.data.collection)
 	}
 
 	useEffect(() => {
 		fetchOfficesTypes()
 	}, [])
 
-	useImperativeHandle(ref, () => ({
-		state: () => {
-			console.log('state', state)
-			return state;
-		},	
-	}), [state])
+	useEffect(() => {
+		const detail = collection.find(office => office.id === id)
+		if (detail) {
+
+			setMutated(prev => ({...prev, 
+				parent_name: detail.name
+			}))
+		}
+	}, [ collection, ])
 
 	return (
 		<Container className="add-modal-body">
@@ -71,7 +82,7 @@ export default forwardRef(function AddModalBody (props, ref) {
 				<Col>
 					<div className="add-modal-body__fields">
 						<label htmlFor="region" className="add-modal-body__fields__text">Trực thuộc</label>
-						<input disabled type="text" className="add-modal-body__fields__input" value={parent_id} />
+						<input disabled type="text" className="add-modal-body__fields__input" value={parent_name} />
 					</div>
 				</Col>
 				<Col>

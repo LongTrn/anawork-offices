@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, } from 'react';
+import React, { useState, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
 import { AddFolderModalBody, } from "../index"
 import {axios} from "../../config/index";
+import { addFolder, } from '../../actions/_/api';
 
-export default function AddFolder(props) {
+export default function AddFolder() {
 
 	const folderRef = useRef()
 	const [show, setShow] = useState(false);
@@ -27,7 +28,8 @@ export default function AddFolder(props) {
 		const url = `/api/offices`
 		const response = await axios.post(url, submitState)
 		if (!response.data.success) return;
-		console.log(response.data.data)
+
+		// await addFolder(submitState)
 		return handleClose()
 	}
 

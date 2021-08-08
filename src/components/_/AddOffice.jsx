@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
-import { AddModalBody, } from "../index"
-import {axios} from "../../config/index";
+import { AddOfficeModalBody, } from "../index"
+import {axios} from "../../config/index"
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
 
 export default function OfficeAdd() {
 
 	const submitRef = useRef();
+	const { token, } = useSelector(state => state.auth)
 	const { index, size, } = useSelector(state => state.offices)
 	const [show, setShow] = useState(false);
-	const dispatch = useDispatch();
 	const { Header, Title, Body, Footer, } = Modal;
+	const dispatch = useDispatch();
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	const handleSubmit = async () => {
@@ -21,11 +22,11 @@ export default function OfficeAdd() {
 		const response = await axios.post(url, submitState)
 
 		if (!response.data.success) return;
-		dispatch({type: FETCH_OFFICES_DATA, payload: { input: { index, size }}})
+		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { index, size }}})
 		return handleClose()
 	}
 
-	useEffect(() => {}, [show])
+	useEffect(() => {console.log("handleShow()", show)}, [show])
 
 	return (
 		<>
@@ -42,7 +43,7 @@ export default function OfficeAdd() {
 					<button className="btn shadow-none" onClick={handleClose}><i className="bi bi-x-lg modal-header__button__text"></i></button>
 				</Header>
 				<Body className="add-office add-office__body">
-					<AddModalBody ref={submitRef}/>
+					<AddOfficeModalBody ref={submitRef}/>
 				</Body>
 				<Footer className="gap-2">
 					<button className="btn shadow-none modal-footer__buttons modal-footer__buttons--left" onClick={() => handleSubmit()}><span className="modal-footer__buttons__text--left">Thêm</span></button>

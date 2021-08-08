@@ -6,6 +6,10 @@ import {
 	FETCH_OFFICES_FAILED,
 	FETCH_OFFICES_SUCCESS,
 
+	FETCH_OFFICES_LIST,
+	FETCH_OFFICES_LIST_FAILED,
+	FETCH_OFFICES_LIST_SUCCESS,
+
 	FETCH_OFFICES_FOLDERS,
 	FETCH_OFFICES_FOLDERS_FAILED,
 	FETCH_OFFICES_FOLDERS_SUCCESS,
@@ -18,13 +22,13 @@ import {
 	SET_OFFICES_PAGE_SIZE,
 } from "../../redux/_/offices/officesActionTypes"
 
-function* fetchData(id, search) {
+function* fetchData(search) {
 	
-	const url = id? `/api/offices/${id}`
-	: search? `/api/offices?Filters=name@=*${search},code@=*${search}`
+	const url = search? `/api/offices?Filters=name@=*${search},code@=*${search}`
 	: `/api/offices`
 	const response = yield axios.get(url)
-	
+
+	if (!response) throw new Error("Bad Request List Offices")
 	if (!response.data.success) throw new Error("Fetch List Offices Failed")
 	return response.data.data
 }
@@ -47,13 +51,9 @@ function recursion(collection, id) {
 
 function* workerOffices (action) {
 	try {
-		const { id, search, size } = action.payload.input
-		let response = yield fetchData(id, search)
-		
-		if (size >= response.total) response = yield fetchData(id, search,)
-		
-		let { collection } = response
-		yield put({ type: FETCH_OFFICES_SUCCESS, payload: { total: collection.length, collection}})
+		const { collection, } = action.payload.input
+
+		yield put({ type: FETCH_OFFICES_SUCCESS, payload: { collection, }})
 		yield put({type: FETCH_OFFICES_FOLDERS, payload: { input: { collection }}})
 	} catch (error) {
 		console.group("Watcher Offices Error")
@@ -68,12 +68,38 @@ function* workerOffices (action) {
 	}
 }
 
+function* workerOfficesList (action) {
+	try {
+		const { id, index, search, size } = action.payload.input
+		let response = yield fetchData(search)
+		
+		if (response.total && size >= response.total) response = yield fetchData(search)
+		
+		let { collection } = response
+		
+		const filtered = id? collection.filter(office => office.parent_id === id).filter(office => office.is_office === true) : collection
+
+		yield put({ type: FETCH_OFFICES_DATA, payload: {input: { collection }}})
+		yield put({ type: FETCH_OFFICES_LIST_SUCCESS, payload: { total: filtered.length, list: filtered, index, size, id: id || ""}})
+	} catch (error) {
+		console.group("Watcher Offices List Error")
+		console.log(error)
+		console.groupEnd()
+        yield put({ 
+            type : FETCH_OFFICES_LIST_FAILED,
+            payload : {
+                error
+            }
+        })
+	}
+}
+
 function* workerOfficesFolders (action) {
 	try {
 		const { collection, } = action.payload.input
 
 		const folders = yield recursion(collection)
-		yield put({ type: FETCH_OFFICES_FOLDERS_SUCCESS, payload: { total: collection.length, folders}})
+		yield put({ type: FETCH_OFFICES_FOLDERS_SUCCESS, payload: { folders }})
 	} catch (error) {
 		console.group("Watcher Offices Folders Error")
 		console.log(error)
@@ -118,9 +144,13 @@ function* workerPaging(action) {
 			case FETCH_OFFICES_DETAIL:
 				yield put({type: FETCH_OFFICES_DETAIL, payload: {input}})
 				break;
+
+			case FETCH_OFFICES_DATA:
+				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				break;
 				
 			default: 
-				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
 				break;
 		}
 	} catch (error) {
@@ -139,14 +169,19 @@ function* workerPaging(action) {
 function* workerPageSizing(action) {
 	try {
 		const { target, ...input } = action.payload.input
+
 		switch (target) {
 
 			case FETCH_OFFICES_DETAIL:
 				yield put({type: FETCH_OFFICES_DETAIL, payload: {input}})
 				break;
+
+			case FETCH_OFFICES_DATA:
+				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				break;
 				
 			default: 
-				yield put({type: FETCH_OFFICES_DATA, payload: {input}})
+				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
 				break;
 		}
 		
@@ -165,6 +200,7 @@ function* workerPageSizing(action) {
 
 export function* watchOffices(){
 	yield takeEvery(FETCH_OFFICES_DATA, workerOffices)
+	yield takeEvery(FETCH_OFFICES_LIST, workerOfficesList)
 	yield takeEvery(FETCH_OFFICES_FOLDERS, workerOfficesFolders)
 	yield takeEvery(FETCH_OFFICES_DETAIL, workerOfficesDetail)
 	yield takeEvery(SET_OFFICES_PAGE, workerPaging)

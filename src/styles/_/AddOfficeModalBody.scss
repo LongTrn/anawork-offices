@@ -1,6 +1,6 @@
 .add-modal-body {
 
-	padding: 11px 5px;
+	padding: 16px 5px;
 
 	&__rows.row {
 
@@ -54,4 +54,8 @@
 			}
 		}
 	}
+}
+
+input.add-modal-body__fields__input:disabled {
+    background-color: var(--ezycheck-white);
 }

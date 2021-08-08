@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, } from 'react';
-import { useDispatch, useSelector, } from "react-redux"
+import React, { useState, useEffect, forwardRef, useImperativeHandle, } from 'react';
+import { useSelector, } from "react-redux"
 import {axios} from "../../config/index";
 import { Container, Row, Col, } from "react-bootstrap";
-import { FETCH_OFFICES_DATA } from '../../redux/_/offices/officesActionTypes';
 
 export default forwardRef(function Body(props, ref) {
 
@@ -12,12 +11,11 @@ export default forwardRef(function Body(props, ref) {
 		collection, 
 		data,
 	} = useSelector(state => state.offices)
-	const { id, code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
+	const { code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
 	const [mutated, setMutated] = useState({
 		parent_name: "",
 	})
 	const {parent_name, } = mutated
-	const dispatch = useDispatch();
 
 	const handleChange = (event) => {
 		setState((prev) => {
@@ -34,12 +32,16 @@ export default forwardRef(function Body(props, ref) {
 		const response = await axios.get(url)
 
 		if (!response.data.success) return;
-		setOfOfficesTypes(response.data.data.collection)
+		return setOfOfficesTypes(response.data.data.collection)
 	}
 
 	useEffect(() => {
 		fetchOfficesTypes()
 	}, [])
+
+	useEffect(() => {}, [ collection, ])
+
+	useEffect(() => { setState(prev => data) },[ data ])
 
 	useEffect(() => {
 		const detail = collection.find(office => office.id === parent_id)
@@ -49,16 +51,6 @@ export default forwardRef(function Body(props, ref) {
 				parent_name: detail.name
 			}))
 		}
-	}, [ collection ])
-
-	useEffect(() => {
-
-		// console.log("data state", data)
-		setState(prev => data)
-	},[ data ])
-
-	useEffect(() => {
-		// console.log("changeing state", state)
 	},[ state ])
 
 	useImperativeHandle(ref, () => ({
@@ -87,7 +79,7 @@ export default forwardRef(function Body(props, ref) {
 				<Col>
 					<div className="add-modal-body__fields">
 						<label htmlFor="region" className="add-modal-body__fields__text">Trực thuộc</label>
-						<input type="text" className="add-modal-body__fields__input" onChange={(e) => handleChange(e)} value={parent_name} name={"parent_id"}/>
+						<input disabled type="text" className="add-modal-body__fields__input" onChange={(e) => handleChange(e)} value={parent_name} name={"parent_id"}/>
 					</div>
 				</Col>
 				<Col>
