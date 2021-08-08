@@ -1,7 +1,7 @@
 import React, { useState, useEffect, } from 'react';
 import "../../styles/_/Pagination.scss"
 import { useDispatch, useSelector, } from "react-redux"
-import { useParams, } from "react-router-dom";
+// import { useParams, } from "react-router-dom";
 import { 
 	FETCH_OFFICES_LIST,
 	SET_OFFICES_PAGE,

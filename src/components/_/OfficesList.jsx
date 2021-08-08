@@ -6,8 +6,7 @@ import {
 	EditOffice,
 	DeleteOffice, 
 } from '../index';
-import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_DATA, SET_OFFICES_PAGE, SET_OFFICES_PAGE_SIZE} from '../../redux/_/offices/officesActionTypes';
+import { useSelector, } from "react-redux"
 
 export default function OfficesList() {
 

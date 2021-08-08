@@ -47,6 +47,7 @@ function Body ({folders}) {
 export default function OfficesFolders() {
 
 	const state = useSelector(state => state.offices)
+	const { token } = useSelector(state => state.auth)
 	const {
 		folders,
 	} = state
@@ -60,7 +61,7 @@ export default function OfficesFolders() {
 	
 	useEffect(() => {
 		fetchData()
-	}, [])
+	}, [token])
 
 	useEffect(() => {
 		setList(prev => folders)

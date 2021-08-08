@@ -1,9 +1,19 @@
 import React, { useState, useEffect, } from 'react';
-import { FETCH_OFFICES_LIST, FETCH_OFFICES_DETAIL, SET_OFFICES_TOTAL } from '../../redux/_/offices/officesActionTypes';
+import { FETCH_OFFICES_LIST, FETCH_OFFICES_DETAIL, } from '../../redux/_/offices/officesActionTypes';
 import "../../styles/_/Accordion.scss"
 import { useDispatch, useSelector, } from "react-redux"
 import { OfficesTypesIcon, } from "../../models/index"
 import styled from "styled-components"
+
+
+const modifyPaddingLeft = (level, is_office, isChild) => {
+		
+	return (is_office || isChild ) && level * 20;
+}
+
+const TreeNode = styled.div`
+padding-left: ${props => modifyPaddingLeft(props.level, props.is_office, props.isChild)}px !important;
+`
 
 function AccordionItem({id, title, icon, button, content, ...props}) {
 
@@ -23,14 +33,6 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isChild =
 	const current = collection && collection.find(office => office.id === id)
 	const customIcon = collection && current && OfficesTypesIcon.find(type => type.office_type_id === current.office_type_id)
 
-	const TreeNode = styled.div`
-		padding-left: ${props => modifyPaddingLeft(props.level, props.is_office, props.isChild)}px !important;
-	`
-
-	const modifyPaddingLeft = (level, is_office, isChild) => {
-		
-		return (is_office || isChild ) && level * 20;
-	}
 
 	const handleAction = () => setCollapsed(prev => !prev)
 	const onDetail = (id) => {
@@ -48,15 +50,8 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isChild =
 	
 	useEffect(() => {
 		setVisited(prev => false)
-		console.log(data.id)
-		if (data.id === id) {
-
-			setVisited(prev => true)
-		}
-		else if (folderId  === id && data.id === undefined) {
-
-			setVisited(prev => true)
-		}
+		if (data.id === id) setVisited(prev => true)
+		else if (folderId  === id && data.id === undefined) setVisited(prev => true)
 		else setVisited(prev => false)
 	}, [ data, folderId, ])
 

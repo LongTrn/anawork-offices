@@ -17,7 +17,6 @@ import {
 	
 	SET_OFFICES_PAGE,
 	SET_OFFICES_PAGE_SIZE,
-	SET_OFFICES_TOTAL,
 	
 } from "./officesActionTypes"
 

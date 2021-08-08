@@ -20,15 +20,15 @@ import {
 	
 	SET_OFFICES_PAGE,
 	SET_OFFICES_PAGE_SIZE,
-	SET_OFFICES_TOTAL,
 } from "../../redux/_/offices/officesActionTypes"
 
-function* fetchData(id, search) {
+function* fetchData(search) {
 	
 	const url = search? `/api/offices?Filters=name@=*${search},code@=*${search}`
 	: `/api/offices`
 	const response = yield axios.get(url)
-	
+
+	if (!response) throw new Error("Bad Request List Offices")
 	if (!response.data.success) throw new Error("Fetch List Offices Failed")
 	return response.data.data
 }
@@ -71,9 +71,9 @@ function* workerOffices (action) {
 function* workerOfficesList (action) {
 	try {
 		const { id, index, search, size } = action.payload.input
-		let response = yield fetchData(id, search)
+		let response = yield fetchData(search)
 		
-		if (size >= response.total) response = yield fetchData(id, search,)
+		if (response.total && size >= response.total) response = yield fetchData(search)
 		
 		let { collection } = response
 		
@@ -82,7 +82,7 @@ function* workerOfficesList (action) {
 		yield put({ type: FETCH_OFFICES_DATA, payload: {input: { collection }}})
 		yield put({ type: FETCH_OFFICES_LIST_SUCCESS, payload: { total: filtered.length, list: filtered, index, size, id: id || ""}})
 	} catch (error) {
-		console.group("Watcher Offices Error")
+		console.group("Watcher Offices List Error")
 		console.log(error)
 		console.groupEnd()
         yield put({ 
@@ -200,22 +200,6 @@ function* workerPageSizing(action) {
 	}
 }
 
-function* workerTotalPage(action) {
-	try {
-
-	} catch (error) {
-		console.group("Watcher Offices Paging Size Error")
-		console.log(error)
-		console.groupEnd()
-        yield put({ 
-            type : FETCH_OFFICES_FAILED,
-            payload : {
-                error
-            }
-        })
-	}
-}
-
 export function* watchOffices(){
 	yield takeEvery(FETCH_OFFICES_DATA, workerOffices)
 	yield takeEvery(FETCH_OFFICES_LIST, workerOfficesList)
@@ -223,5 +207,4 @@ export function* watchOffices(){
 	yield takeEvery(FETCH_OFFICES_DETAIL, workerOfficesDetail)
 	yield takeEvery(SET_OFFICES_PAGE, workerPaging)
 	yield takeEvery(SET_OFFICES_PAGE_SIZE, workerPageSizing)
-	yield takeEvery(SET_OFFICES_TOTAL, workerTotalPage)
 }

@@ -7,7 +7,7 @@ import React, {
 import "../../styles/_/AddOfficeModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
 import { axios } from "../../config/index";
-import { useDispatch, useSelector, } from "react-redux"
+import { useSelector, } from "react-redux"
 
 export default forwardRef(function AddOfficeModalBody ({id}, ref) {
 
@@ -30,8 +30,8 @@ export default forwardRef(function AddOfficeModalBody ({id}, ref) {
 		parent_name: "",
 	})
 	const {parent_name, } = mutated
-	const {code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
-	const [error, setError] = useState({})
+	const {code, full_address, latitude, longitude, name, office_type_id, } = state
+	// const [error, setError] = useState({})
 
 	const handleChange = (event) => {
 
@@ -48,23 +48,23 @@ export default forwardRef(function AddOfficeModalBody ({id}, ref) {
 		setOfOfficesTypes(response.data.data.collection)
 	}
 
-	const setErrorMessage = (target, message) => {
+	// const setErrorMessage = (target, message) => {
 
-		return setError(prev => ({...prev, 
-			[target]: message,
-		}))
-	}
+	// 	return setError(prev => ({...prev, 
+	// 		[target]: message,
+	// 	}))
+	// }
 
-	const useSetErrorMessage = (target) => {
+	// const useSetErrorMessage = (target) => {
 
-		return setError(({prev}) => {
-			const test = 
-			console.log()
-			return {
-				...prev,
-			}
-		})
-	}
+	// 	return setError(({prev}) => {
+	// 		const test = 
+	// 		console.log()
+	// 		return {
+	// 			...prev,
+	// 		}
+	// 	})
+	// }
 
 	const validation = () => {
 
@@ -101,10 +101,10 @@ export default forwardRef(function AddOfficeModalBody ({id}, ref) {
 		}
 	}, [ collection, ])
 
-	useEffect(() => {
+	// useEffect(() => {
 
 
-	}, [ error, ])
+	// }, [ error, ])
 
 	useImperativeHandle(ref, () => ({
 		state: () => {
