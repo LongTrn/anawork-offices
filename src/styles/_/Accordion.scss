@@ -1,17 +1,23 @@
+@use "sass:string";
+
 $padding-left: 20px;
 
-@mixin test($target, $nth: 1, $value: 20px) {
+// @function str-replace($string, $search, $replace: '') {
+// 	$index: str-index($string, $search);
+	
+// 	@if $index {
+// 	  @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+// 	}
+	
+// 	@return $string;
+// }
 
-	.offices-accordion__item__title--is-child {
+// @function str-split($string) {
 
-		padding-left: ($value) * $nth !important;
-	}
-}
+// 	@return str-replace($string, " ");
+// }
 
-@function getPaddingRecur($nth, $value) {
-
-	@return ($value) * $nth;
-}
+$level: calc(attr(aria-level));
 
 .offices-accordion {
 
@@ -133,42 +139,31 @@ $padding-left: 20px;
 				background-color: #e9eaf9;
 			}
 
-			&--modified {
+			&--visited {
 
 				background-color: #e9eaf9;
 			}
 
 			&--is-child {
 
-				// $padding-left: ($padding-left) + 20px;
-				padding-left: ($padding-left);
-				// padding-left: getPaddingRecur(1, $padding-left);
-				// @include test(&, 1, 20px);
+				padding-left: ($padding-left) + 20px;
 
-			}
-
-			&--padding-left {
-
-				padding-left: 36px;
 			}
 		}
 
 		&__content {
 
 			display: none;
-			// padding: 10px 20px;
-			padding-left: 20px;
 
-			// & div.offices-accordion__item__title {
+			&:nth-child(n) {
 
-			// 	padding-left: 20px;
-			// }
+				// padding-left: $padding-left;
+			}
 			
 			&--show {
 				
 				display: flex;
 				flex-direction: column;
-				// padding-left: 20px;
 			}
 		}
 	}
@@ -184,4 +179,13 @@ $padding-left: 20px;
 		font-size: 14px;
 		color: var(--primary-medium-grey);
 	}
+}
+
+.test {
+
+	// $test: "Roboto";
+	// $size: &;
+	// @debug "divider offset: #{string.length(str-replace("Roboto", "Roboto", "1" ))}";
+	// font: (string.length(str-replace(str-split(str-replace($size, ".", "")), "Roboto", "1" )));
+	// font: ($size);
 }
