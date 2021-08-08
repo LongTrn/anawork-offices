@@ -6,10 +6,10 @@ import React, {
 } from "react";
 import "../../styles/_/AddOfficeModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
-import {axios} from "../../config/index";
+import { axios } from "../../config/index";
 import { useSelector, } from "react-redux"
 
-export default forwardRef(function AddOfficeModalBody (props, ref) {
+export default (function AddOfficeModalBodyy ({id}) {
 
 	const [officesTypes, setOfOfficesTypes] = useState([])
 	const [state, setState] = useState({
@@ -24,7 +24,6 @@ export default forwardRef(function AddOfficeModalBody (props, ref) {
 		radius: "0", //"12",
 	})
 	const { 
-		folderId,
 		collection, 
 	} = useSelector(state => state.offices)
 	const [mutated, setMutated] = useState({
@@ -32,7 +31,6 @@ export default forwardRef(function AddOfficeModalBody (props, ref) {
 	})
 	const {parent_name, } = mutated
 	const {code, full_address, latitude, longitude, name, office_type_id, } = state
-	// const [error, setError] = useState({})
 
 	const handleChange = (event) => {
 		setState(prev => ({...prev,
@@ -42,60 +40,20 @@ export default forwardRef(function AddOfficeModalBody (props, ref) {
 	
 	const fetchOfficesTypes = async () => {
 
-		const url = `/api/officeTypes`;
-		const response = await axios.get(url)
+		const url = `/api/officeTypes`
+		// const response = await axios.get(url)
 
-		if (!response.data.success) return;
-		setOfOfficesTypes(response.data.data.collection)
+		// if (!response.data.success) return;
+		// console.log(response.data.data.collection)
+		// setOfOfficesTypes(response.data.data.collection)
 	}
 
-	// const setErrorMessage = (target, message) => {
-
-	// 	return setError(prev => ({...prev, 
-	// 		[target]: message,
-	// 	}))
-	// }
-
-	// const useSetErrorMessage = (target) => {
-
-	// 	return setError(({prev}) => {
-	// 		const test = 
-	// 		console.log()
-	// 		return {
-	// 			...prev,
-	// 		}
-	// 	})
-	// }
-
-	// const validation = () => {
-
-	// 	if (!code && code === "") {
-
-	// 	}
-	// 	// full_address: "", //"68 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000",
-	// 	// is_office: true, //true,
-	// 	// latitude: "", //"12", // 0 - 100
-	// 	// longitude: "", //"12", // 0 - 100
-	// 	// name: "", //"Văn phòng UI test",
-	// 	// office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
-	// 	// parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
-	// 	// radius: "0", //"12",
-	// }
-	
 	useEffect(() => {
 		fetchOfficesTypes()
-		
 	}, [])
 
-	useEffect (() => {
-		setState(prev => ({...prev, parent_id: folderId}))
-	}, [folderId])
-
 	useEffect(() => {
-	}, [mutated])
-
-	useEffect(() => {
-		const detail = collection.find(office => office.id === folderId)
+		const detail = collection.find(office => office.id === id)
 		if (detail) {
 
 			setMutated(prev => ({...prev, 
@@ -103,21 +61,6 @@ export default forwardRef(function AddOfficeModalBody (props, ref) {
 			}))
 		}
 	}, [ collection, ])
-	
-	useEffect(() => {
-		// console.log(officesTypes)
-	}, [officesTypes])
-
-	// useEffect(() => {
-
-
-	// }, [ error, ])
-
-	useImperativeHandle(ref, () => ({
-		state: () => {
-			return state;
-		},	
-	}), [state])
 
 	return (
 		<Container className="add-modal-body">
@@ -146,7 +89,7 @@ export default forwardRef(function AddOfficeModalBody (props, ref) {
 					<div className="add-modal-body__fields">
 						<label htmlFor="type" className="add-modal-body__fields__text">Loại văn phòng</label>
 						<select name="type" className="add-modal-body__fields__input add-modal-body__fields__input--select" value={office_type_id} onChange={(e) => handleChange(e)} name="office_type_id" >
-							{officesTypes.length > 0 && officesTypes.map(officesType => (<option value={officesType.id} >{officesType.name}</option>))}
+							{officesTypes.map(officesType => (<option value={officesType.id} >{officesType.name}</option>))}
 						</select>
 					</div>
 				</Col>

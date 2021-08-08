@@ -37,7 +37,6 @@ const instance = axios.create({
 instance.setAuthorizationHeader = (token) => {
     instance.defaults.headers['Authorization'] = `Bearer ${token}`
 	store.dispatch({type: SET_TOKEN, payload: { token: token, refreshToken: token}})
-	// instance.defaults.headers.common['Authorization'] = `Bearer ${localToken}`
     window.localStorage.setItem('token', token)
 }
 
@@ -55,7 +54,7 @@ instance.interceptors.request.use((config) =>{
 
 		instance.setAuthorizationHeader(storeToken)
 	}
-
+	console.log("pre req")
 	return config;
 }, (error) => {
 	return Promise.reject(error);
@@ -64,6 +63,7 @@ instance.interceptors.request.use((config) =>{
 instance.interceptors.response.use((response) => {
     return response
 }, error => {
+	console.log("post req err")
 	const originalRequest = error.config;
     if (error.response.status === 401) {
 		originalRequest._retry = true;

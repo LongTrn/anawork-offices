@@ -38,7 +38,11 @@ function Body ({folders}) {
 				<input type="text" className="offices-folders__body__search-bar__field" placeholder="Tìm kiếm..."/>
 			</div>
 			<div className="offices-folders__body__folders">
-				<Accordion children={folders}/>
+				{folders.length > 0 ?
+					(<Accordion children={folders}/>)
+					:
+					(<div className="offices-folders__body__folders__no-content">Không có danh sách</div>)
+				}
 			</div>
 		</div>
 	)
@@ -60,7 +64,7 @@ export default function OfficesFolders() {
 	}
 	
 	useEffect(() => {
-		fetchData()
+		if (token) fetchData()
 	}, [token])
 
 	useEffect(() => {

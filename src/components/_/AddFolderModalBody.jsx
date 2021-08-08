@@ -8,6 +8,7 @@ import "../../styles/_/AddFolderModalBody.scss";
 import { Container, Row, } from "react-bootstrap";
 import { useDispatch, useSelector, } from "react-redux"
 import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
+import {axios} from "../../config/index"
 
 export default forwardRef(function AddFolderModalBody(props, ref) {
 
@@ -31,7 +32,7 @@ export default forwardRef(function AddFolderModalBody(props, ref) {
 	}, [collection])
 	
 	useEffect(() => {
-		console.log(list)
+		// console.log(list)
 	}, [list])
 
 	useImperativeHandle(ref, () => ({
@@ -47,7 +48,7 @@ export default forwardRef(function AddFolderModalBody(props, ref) {
 					<label htmlFor="name" className="add-folder-modal-body__fields__text">Trực thuộc</label>
 					<select type="text" className="shadow-none add-folder-modal-body__fields__input add-folder-modal-body__fields__input--select" name="parent_id" value={parent_id} onChange={(e) => handleChange(e)}>
 						<option value="" className="add-folder-modal-body__fields__input__value">Không trực thuộc</option>
-						{list.map(folder => (<option value={folder.id} className="add-folder-modal-body__fields__input__value">{folder.name}</option>))}
+						{list && list.map(folder => (<option value={folder.id} className="add-folder-modal-body__fields__input__value">{folder.name}</option>))}
 					</select>
 				</div>
 			</Row>

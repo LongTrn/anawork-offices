@@ -15,7 +15,7 @@ export default function OfficeDelete({ id, }) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = (id) => {
-		console.log("Đối tượng muốn xóa", id)
+		// console.log("Đối tượng muốn xóa", id)
 		if (!id) return alert("Chọn đối tượng muốn xóa")
 		return setShow(true);
 	}
@@ -23,7 +23,6 @@ export default function OfficeDelete({ id, }) {
 
 	const handleDelete = async (id, pageIndex, pageSize) => {
 		const url = `/api/offices/${id}`
-		
 		const response = await axios.delete(url)
 		if (!response.data.success) return;
 		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { id: folderId, index: pageIndex, size: pageSize }}})

@@ -138,7 +138,6 @@ function* workerOfficesDetail (action) {
 function* workerPaging(action) {
 	try {
 		const { target, ...input } = action.payload.input
-		console.log("workerPaging", action.payload.input)
 
 		switch (target) {
 
@@ -170,7 +169,6 @@ function* workerPaging(action) {
 function* workerPageSizing(action) {
 	try {
 		const { target, ...input } = action.payload.input
-		console.log("workerPageSizing", action.payload.input)
 
 		switch (target) {
 

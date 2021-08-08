@@ -32,7 +32,7 @@ export default forwardRef(function Body(props, ref) {
 		const response = await axios.get(url)
 
 		if (!response.data.success) return;
-		setOfOfficesTypes(response.data.data.collection)
+		return setOfOfficesTypes(response.data.data.collection)
 	}
 
 	useEffect(() => {
