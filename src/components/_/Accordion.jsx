@@ -72,7 +72,7 @@ function AccordionItemTitle({id, is_office, button, icon, title, item, isChild =
 							</div>)
 						}
 						<div className="offices-accordion__item__title__info" onClick={() => item.is_office ? onDetail(id) : onListOffices(id)}>
-							<div className="offices-accordion__item__title__icon">{icon || (<div className={customIcon && customIcon.value + " offices-accordion__item__title__icon__svg "}/>)}</div>
+							<div className="offices-accordion__item__title__icon">{icon || (<div className={(customIcon && (item.is_office && !customIcon.office_type_id) ? "" : customIcon.value ) + " offices-accordion__item__title__icon__svg "}/>)}</div>
 							<div className="offices-accordion__item__title__text"><span>{title || "title"}</span></div>
 						</div>
 				</TreeNode>

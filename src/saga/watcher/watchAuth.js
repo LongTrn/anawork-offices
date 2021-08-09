@@ -14,7 +14,6 @@ function* workerAuth() {
 		}, "token")
 	
 		if (!setToken) {
-			console.log("test")
 			const username = "vodinhthien@gmail.com"
 			const password = "RAPtor@4321"
 			const url = `/api/authenticate/authenticate?username=${username}&password=${password}`
