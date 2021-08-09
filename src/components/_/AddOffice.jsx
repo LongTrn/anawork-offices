@@ -21,7 +21,7 @@ export default function OfficeAdd() {
 			created_by: user.id,
 		};
 		await addOffice(submitState)
-		dispatch(fetchOfficesList(index, size))
+		dispatch(fetchOfficesList(index, size, folderId))
 		return handleClose()
 	}
 
