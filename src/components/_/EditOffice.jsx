@@ -1,15 +1,13 @@
 import React from 'react';
 import { useDispatch, } from "react-redux"
-import { FETCH_OFFICES_DETAIL } from '../../redux/_/offices/officesActionTypes';
+import { fetchOfficesDetail, } from "../../actions/_/dispatch"
 
 export default function OfficeEdit({ id, }) {
 
 	const dispatch = useDispatch();
-	const showDetail = (id) => dispatch({type: FETCH_OFFICES_DETAIL, payload: { input : { id }}})
+	const showDetail = (id) => dispatch(fetchOfficesDetail(id))
 
 	return (
-		<>
-			<button className="btn shadow-none" onClick={() => showDetail(id)}><i className="bi bi-pencil-fill"/></button>
-		</>
+		<><button className="btn shadow-none" onClick={() => showDetail(id)}><i className="bi bi-pencil-fill"/></button></>
 	)
 }

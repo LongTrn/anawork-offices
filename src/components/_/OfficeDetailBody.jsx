@@ -1,56 +1,37 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle, } from 'react';
 import { useSelector, } from "react-redux"
-import {axios} from "../../config/index";
 import { Container, Row, Col, } from "react-bootstrap";
+import { getOfficeTypes, } from "../../actions/_/api"
 
 export default forwardRef(function Body(props, ref) {
 
-	const [officesTypes, setOfOfficesTypes] = useState([])
-	const [state, setState] = useState({})
 	const { 
 		collection, 
 		data,
 	} = useSelector(state => state.offices)
-	const { code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
+	const [officesTypes, setOfOfficesTypes] = useState([])
+	const [state, setState] = useState({})
 	const [mutated, setMutated] = useState({
 		parent_name: "",
 	})
 	const {parent_name, } = mutated
+	const { code, full_address, latitude, longitude, name, office_type_id, parent_id, } = state
 
-	const handleChange = (event) => {
-		setState((prev) => {
-			return {
-				...prev,
-				[event.target.name]: event.target.value,
-			};
-		});
-	}
-
+	const handleChange = (event) => setState((prev) => ({...prev, [event.target.name]: event.target.value,}));
 	const fetchOfficesTypes = async () => {
 
-		const url = `/api/officeTypes`
-		const response = await axios.get(url)
-
-		if (!response.data.success) return;
+		const response = await getOfficeTypes()
 		return setOfOfficesTypes(response.data.data.collection)
 	}
 
 	useEffect(() => {
 		fetchOfficesTypes()
 	}, [])
-
 	useEffect(() => {}, [ collection, ])
-
 	useEffect(() => { setState(prev => data) },[ data ])
-
 	useEffect(() => {
 		const detail = collection.find(office => office.id === parent_id)
-		if (detail) {
-
-			setMutated(prev => ({...prev, 
-				parent_name: detail.name
-			}))
-		}
+		if (detail) setMutated(prev => ({...prev, parent_name: detail.name}))
 	},[ state ])
 
 	useImperativeHandle(ref, () => ({

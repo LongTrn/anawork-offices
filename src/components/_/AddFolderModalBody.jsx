@@ -7,33 +7,25 @@ import React, {
 import "../../styles/_/AddFolderModalBody.scss";
 import { Container, Row, } from "react-bootstrap";
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
-import {axios} from "../../config/index"
+import { fetchOfficesList, } from "../../actions/_/dispatch"
+import moment from "moment"
 
 export default forwardRef(function AddFolderModalBody(props, ref) {
 
-	const { collection, } = useSelector(state => state.offices)
+	const { index, size, collection, } = useSelector(state => state.offices)
 	const [list, setList] = useState([])
 	const [state, setState] = useState({
 		name: "", 
 		parent_id: "",
 	})
 	const { name, parent_id} = state
+
 	const dispatch = useDispatch();
 	const handleChange = (event) => setState(prev => ({...prev, [event.target.name]: event.target.value}))
 
-
-	useEffect(() => {
-		dispatch({type: FETCH_OFFICES_LIST, payload: { input: {}}})
-	}, [])
-
-	useEffect(() => {
-		setList(collection.map(office => !office.is_office && office).filter(notNull => notNull))
-	}, [collection])
-	
-	useEffect(() => {
-		// console.log(list)
-	}, [list])
+	useEffect(() => dispatch(fetchOfficesList(index, size)), [])
+	useEffect(() => setList(collection.map(office => !office.is_office && office).filter(notNull => notNull)), [collection])
+	useEffect(() => {}, [list])
 
 	useImperativeHandle(ref, () => ({
 		state: () => {

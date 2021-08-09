@@ -1,15 +1,19 @@
 import React, { useState, useRef, } from 'react';
+import { useDispatch, useSelector, } from "react-redux"
 import { Modal, } from "react-bootstrap";
 import { AddFolderModalBody, } from "../index"
-import {axios} from "../../config/index";
-import { addFolder, } from '../../actions/_/api';
+import { addOffice, } from '../../actions/_/api';
+import { fetchOfficesList, } from "../../actions/_/dispatch"
+import { OfficeState, } from "../../models/index"
 
 export default function AddFolder() {
 
+	const { index, size, collection, } = useSelector(state => state.offices)
 	const folderRef = useRef()
 	const [show, setShow] = useState(false);
 	const { Header, Title, Body, Footer, } = Modal;
 	
+	const dispatch = useDispatch();
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const handleSubmit = async () => {
@@ -25,11 +29,17 @@ export default function AddFolder() {
 			longitude: "0", 
 			...folderRef.current.state()
 		}
-		const url = `/api/offices`
-		const response = await axios.post(url, submitState)
-		if (!response.data.success) return;
-
-		// await addFolder(submitState)
+		const test = {
+			...OfficeState,
+			is_office: false,
+			latitude: "0", 
+			longitude: "0", 
+			code: "VP".concat(("" + (10001 + collection.length)).slice(1)),
+			...folderRef.current.state()
+		}
+		console.log(test)
+		await addOffice(submitState)
+		dispatch(fetchOfficesList(index, size))
 		return handleClose()
 	}
 

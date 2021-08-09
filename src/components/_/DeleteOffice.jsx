@@ -2,8 +2,9 @@ import React, { useState, } from 'react';
 import { Modal, } from "react-bootstrap";
 import {axios} from "../../config/index";
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
+import { fetchOfficesList, } from "../../actions/_/dispatch"
 import "../../styles/_/DeleteOffice.scss"
+import { deleteOffice, } from "../../actions/_/api"
 
 export default function OfficeDelete({ id, }) {
 
@@ -13,22 +14,19 @@ export default function OfficeDelete({ id, }) {
 		size,
 	} = useSelector(state => state.offices)
 	const [show, setShow] = useState(false);
+	const { Header, Title, Body, Footer, } = Modal;
+
+	const dispatch = useDispatch();
 	const handleClose = () => setShow(false);
 	const handleShow = (id) => {
-		// console.log("Đối tượng muốn xóa", id)
 		if (!id) return alert("Chọn đối tượng muốn xóa")
 		return setShow(true);
 	}
-	const dispatch = useDispatch();
-
 	const handleDelete = async (id, pageIndex, pageSize) => {
-		const url = `/api/offices/${id}`
-		const response = await axios.delete(url)
-		if (!response.data.success) return;
-		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { id: folderId, index: pageIndex, size: pageSize }}})
+		await deleteOffice(id)
+		dispatch(fetchOfficesList(pageIndex, pageSize, folderId))
 		return handleClose();
 	}
-	const { Header, Title, Body, Footer, } = Modal;
 
 	return (
 		<>

@@ -70,7 +70,7 @@ function* workerOffices (action) {
 
 function* workerOfficesList (action) {
 	try {
-		const { id, index, search, size } = action.payload.input
+		const { id, search, index, size } = action.payload.input
 		let response = yield fetchData(search)
 		
 		if (response.total && size >= response.total) response = yield fetchData(search)
@@ -184,7 +184,6 @@ function* workerPageSizing(action) {
 				yield put({type: FETCH_OFFICES_LIST, payload: {input}})
 				break;
 		}
-		
 	} catch (error) {
 		console.group("Watcher Offices Paging Size Error")
 		console.log(error)

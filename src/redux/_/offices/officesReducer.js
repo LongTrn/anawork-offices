@@ -73,7 +73,6 @@ export const officesReducer = (state = initial, action) => {
 				...state, 
 				isLoading: false,
 				data: action.payload.data,
-				// folderId: "",
 			}
 		
 		case FETCH_OFFICES_FOLDERS_SUCCESS:
@@ -81,7 +80,7 @@ export const officesReducer = (state = initial, action) => {
 				...state, 
 				isLoading: false,
 				folders: action.payload.folders,
-				data: {},
+				data: initial.data,
 			}
 		
 		case FETCH_OFFICES_LIST_SUCCESS:
@@ -90,7 +89,7 @@ export const officesReducer = (state = initial, action) => {
 				isLoading: false,
 				list: action.payload.list,
 				total: action.payload.total,
-				data: {},
+				data: initial.data,
 				index: action.payload.index,
 				size: action.payload.size,
 				folderId: action.payload.id || state.folderId,
@@ -101,7 +100,7 @@ export const officesReducer = (state = initial, action) => {
 				...state, 
 				isLoading: false,
 				collection: action.payload.collection,
-				data: {},
+				data: initial.data,
 			}
 
 		default:

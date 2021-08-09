@@ -1,32 +1,29 @@
 import React, { useState, useEffect, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
 import { AddOfficeModalBody, } from "../index"
-import {axios} from "../../config/index"
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
+import { fetchOfficesList, } from "../../actions/_/dispatch"
+import { addOffice, } from '../../actions/_/api';
 
 export default function OfficeAdd() {
 
 	const submitRef = useRef();
-	const { token, } = useSelector(state => state.auth)
-	const { index, size, } = useSelector(state => state.offices)
+	const { index, size, folderId} = useSelector(state => state.offices)
+	const { user, } = useSelector(state => state.auth)
 	const [show, setShow] = useState(false);
 	const { Header, Title, Body, Footer, } = Modal;
 	const dispatch = useDispatch();
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	const handleSubmit = async () => {
-		
-		const submitState = submitRef.current.state();
-		const url = `/api/offices`
-		const response = await axios.post(url, submitState)
-
-		if (!response.data.success) return;
-		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { index, size }}})
+		if (!folderId) return alert("Vui lòng chọn Chi nhánh Trực thuộc")
+		const submitState = {...submitRef.current.state(),
+			created_by: user.id,
+		};
+		await addOffice(submitState)
+		dispatch(fetchOfficesList(index, size, folderId))
 		return handleClose()
 	}
-
-	useEffect(() => {console.log("handleShow()", show)}, [show])
 
 	return (
 		<>
