@@ -14,7 +14,7 @@ function* workerAuth() {
 		}, "token")
 	
 		if (!setToken) {
-
+			console.log("test")
 			const username = "vodinhthien@gmail.com"
 			const password = "RAPtor@4321"
 			const url = `/api/authenticate/authenticate?username=${username}&password=${password}`
@@ -23,6 +23,10 @@ function* workerAuth() {
 			if (!response) throw new Error("Bad Request Authenticate")
 			const { token, success } = response.data
 			if (!success) throw new Error("Get Authenticate Failed")
+			yield call({
+				context: localStorage,
+				fn: localStorage.setItem
+			}, "token", token)
 			setToken = token
 		}
 		

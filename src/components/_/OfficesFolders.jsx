@@ -59,8 +59,7 @@ export default function OfficesFolders() {
 	const [list , setList] = useState([{}])
 
 	const fetchData = ( pageSize = 10 ) => {
-		dispatch({type: FETCH_OFFICES_LIST, payload: { input: { index: 1, size: pageSize }}})
-		return;
+		return dispatch({type: FETCH_OFFICES_LIST, payload: { input: { index: 1, size: pageSize }}})
 	}
 	
 	useEffect(() => {

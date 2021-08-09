@@ -8,7 +8,6 @@ import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
 export default function OfficeAdd() {
 
 	const submitRef = useRef();
-	const { token, } = useSelector(state => state.auth)
 	const { index, size, } = useSelector(state => state.offices)
 	const [show, setShow] = useState(false);
 	const { Header, Title, Body, Footer, } = Modal;
@@ -26,7 +25,7 @@ export default function OfficeAdd() {
 		return handleClose()
 	}
 
-	useEffect(() => {console.log("handleShow()", show)}, [show])
+	// useEffect(() => {console.log("handleShow()", show)}, [show])
 
 	return (
 		<>
