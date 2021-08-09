@@ -1,30 +1,31 @@
 import React from 'react';
-import {axios} from "../../config/index";
 import { useDispatch, useSelector, } from "react-redux"
-import { FETCH_OFFICES_LIST } from '../../redux/_/offices/officesActionTypes';
+import { fetchOfficesList, } from "../../actions/_/dispatch"
+import { editOffice, } from "../../actions/_/api"
+import moment from "moment"
 
-export default function Footer({ getState}) {
+export default function Footer({getState}) {
 
 	const { 
 		index, 
 		size,
 		folderId,
 	} = useSelector(state => state.offices)
+	const { user, } = useSelector(state => state.auth)
 	const dispatch = useDispatch();
 
 	const onBack = (id, index = 1, size = 10) => {
-		
-		return dispatch({type: FETCH_OFFICES_LIST, payload: {input: { id, index, size, }}})
+		return dispatch(fetchOfficesList(index, size, id, ))
 	}
 
 	const onUpdate = async (index = 1, size = 10) => {
 		
-		const submitState = getState()
-		const url = `/api/offices/${submitState.id}`
-		const response = await axios.put(url, submitState)
-
-		if(!response.data.success) return;
-		return dispatch({type: FETCH_OFFICES_LIST, payload: {input: { index, size }}})
+		const submitState = {...getState(),
+			modified_at: moment().format(),
+			modified_by: user.id,
+		}
+		await editOffice(submitState)
+		return dispatch(fetchOfficesList(index, size,))
 	}
 	
 	return (

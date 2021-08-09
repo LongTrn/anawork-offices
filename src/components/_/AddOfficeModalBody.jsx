@@ -8,21 +8,12 @@ import "../../styles/_/AddOfficeModalBody.scss";
 import { Container, Row, Col, } from "react-bootstrap";
 import {axios} from "../../config/index";
 import { useSelector, } from "react-redux"
+import { OfficeState, } from "../../models/index"
 
 export default forwardRef(function AddOfficeModalBody (props, ref) {
 
 	const [officesTypes, setOfOfficesTypes] = useState([])
-	const [state, setState] = useState({
-		code: "", //"VP0001",
-		full_address: "", //"68 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000",
-		is_office: true, //true,
-		latitude: "", //"12", // 0 - 100
-		longitude: "", //"12", // 0 - 100
-		name: "", //"Văn phòng UI test",
-		office_type_id: "", //"481cafe4-db78-4f73-9735-4c919a4e6020",
-		parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77", //"96856649-d5fa-46af-98d2-71e7289dbf77",
-		radius: "0", //"12",
-	})
+	const [state, setState] = useState(OfficeState)
 	const { 
 		folderId,
 		collection, 
