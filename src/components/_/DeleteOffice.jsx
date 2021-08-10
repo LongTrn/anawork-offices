@@ -30,7 +30,7 @@ export default function OfficeDelete({ id, }) {
 
 	return (
 		<>
-			<button className="btn shadow-none" onClick={() => handleShow(id)}><i className="bi bi-trash-fill"/></button>
+			<button className="btn shadow-none button" onClick={() => handleShow(id)}><div className="icons icons__delete"/></button>
 			<Modal
 				show={show}
 				onHide={handleClose}

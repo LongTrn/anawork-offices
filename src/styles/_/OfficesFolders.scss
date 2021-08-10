@@ -21,11 +21,17 @@
 		}
 
 		&__action {
+			
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			align-content: center;
 
 			& button.btn {
 
 				padding: 0;
-				margin: 0 4px;
+				margin: 0;
 				height: 100%;
 
 

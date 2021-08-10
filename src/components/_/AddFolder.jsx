@@ -18,11 +18,6 @@ export default function AddFolder() {
 	const handleClose = () => setShow(false);
 	const handleSubmit = async () => {
 		
-		/**
-		 	is_office: false
-			name: "Khu vực văn phòng 1"
-			parent_id: "96856649-d5fa-46af-98d2-71e7289dbf77"
-		 */
 		const submitState = {
 			is_office: false,
 			latitude: "0", 
@@ -45,7 +40,7 @@ export default function AddFolder() {
 
 	return (
 		<>
-			<button className="btn shadow-none" onClick={() => handleShow()}><i className="bi bi-folder-plus"/></button>
+			<button className="btn shadow-none button" onClick={() => handleShow()}><i className="icons icons__new-folder"/></button>
 			<Modal
 				show={show}
 				onHide={handleClose}

@@ -1,24 +1,3 @@
-@use "sass:string";
-
-$padding-left: 20px;
-
-// @function str-replace($string, $search, $replace: '') {
-// 	$index: str-index($string, $search);
-	
-// 	@if $index {
-// 	  @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-// 	}
-	
-// 	@return $string;
-// }
-
-// @function str-split($string) {
-
-// 	@return str-replace($string, " ");
-// }
-
-$level: calc(attr(aria-level));
-
 .offices-accordion {
 
 	&__item {
@@ -146,7 +125,7 @@ $level: calc(attr(aria-level));
 
 			&--is-child {
 
-				padding-left: ($padding-left) + 20px;
+				padding-left: 40px;
 
 			}
 		}
@@ -154,11 +133,6 @@ $level: calc(attr(aria-level));
 		&__content {
 
 			display: none;
-
-			&:nth-child(n) {
-
-				// padding-left: $padding-left;
-			}
 			
 			&--show {
 				
@@ -179,13 +153,4 @@ $level: calc(attr(aria-level));
 		font-size: 14px;
 		color: var(--primary-medium-grey);
 	}
-}
-
-.test {
-
-	// $test: "Roboto";
-	// $size: &;
-	// @debug "divider offset: #{string.length(str-replace("Roboto", "Roboto", "1" ))}";
-	// font: (string.length(str-replace(str-split(str-replace($size, ".", "")), "Roboto", "1" )));
-	// font: ($size);
 }

@@ -25,17 +25,20 @@ textarea
 {
 						
     &::-webkit-scrollbar-track {
+        display: none;
         border-radius: 10px;
         background-color: transparent;
     }
 
     &::-webkit-scrollbar {
+        display: none;
         width: 4px;
         border-radius: 10px;
         background-color: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
+        display: none;
         border-radius: 10px;
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
         background-color: #ccc;
@@ -148,6 +151,73 @@ textarea
                 
             }
 
+        }
+    }
+}
+
+.button {
+
+    width: 20px;
+    height: 20px;
+    padding: 0 !important;
+    color: #959595;
+    
+    display: flex;
+    align-items: center;
+}
+
+.icons {
+
+    width: 100%;
+    height: 100%;
+    -webkit-filter: invert(64%) sepia(9%) saturate(24%) hue-rotate(337deg) brightness(93%) contrast(80%);
+    filter: invert(64%) sepia(9%) saturate(24%) hue-rotate(337deg) brightness(93%) contrast(80%);
+    
+    background-repeat: no-repeat;
+    background-size: 13px 13px;
+    object-fit: contain;
+    background-position: center;
+    
+    &--medium {
+
+        background-size: 20px 20px;
+    }
+
+    &__new-folder {
+
+        background-image: url("../assets/svg/create_new_folder_black_24dp.svg");
+    }
+
+    &__edit {
+
+        background-image: url("../assets/svg/edit_black_24dp.svg");
+    }
+    
+    &__delete {
+
+        background-image: url("../assets/svg/delete_black_24dp.svg");
+    }
+
+    &__first-page {
+
+        background-image: url("../assets/svg/first_page_black_24dp.svg")
+    }
+
+    &__last-page {
+
+        background-image: url("../assets/svg/last_page_black_24dp.svg")
+    }
+
+    &__chevron {
+
+        &__left {
+
+            background-image: url("../assets/svg/chevron_left_black_24dp.svg")
+        }
+
+        &__right {
+
+            background-image: url("../assets/svg/chevron_right_black_24dp.svg")
         }
     }
 }

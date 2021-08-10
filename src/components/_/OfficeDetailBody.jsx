@@ -90,7 +90,7 @@ export default forwardRef(function Body(props, ref) {
 				<Col>
 					<div className="add-modal-body__fields">
 						<label htmlFor="address" className="add-modal-body__fields__text">Địa chỉ</label>
-						<textarea rows="14" cols="10" wrap="soft" type="text" className="add-modal-body__fields__input" onChange={(e) => handleChange(e)} value={full_address} name={"full_address"}/>
+						<textarea rows="14" cols="10" wrap="soft" type="text" className="add-modal-body__fields__input--detail" onChange={(e) => handleChange(e)} value={full_address} name={"full_address"}/>
 					</div>
 				</Col>
 			</Row>

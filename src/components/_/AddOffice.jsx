@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, } from 'react';
+import React, { useState, useRef, } from 'react';
 import { Modal, } from "react-bootstrap";
 import { AddOfficeModalBody, } from "../index"
 import { useDispatch, useSelector, } from "react-redux"
 import { fetchOfficesList, } from "../../actions/_/dispatch"
 import { addOffice, } from '../../actions/_/api';
+import "../../styles/_/OfficesList.scss"
 
 export default function OfficeAdd() {
 
@@ -27,7 +28,7 @@ export default function OfficeAdd() {
 
 	return (
 		<>
-			<button className="btn shadow-none" onClick={() => handleShow()}><i className="bi bi-plus-lg"/><span className="list__body__table__body__tbody__action__text">Thêm</span></button>
+			<button className="btn shadow-none" onClick={() => handleShow()}><i className="bi bi-plus-lg"/><span className="offices-list__body__table__head__thead__action__text">Thêm</span></button>
 			<Modal
 				show={show}
 				onHide={handleClose}
